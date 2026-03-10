@@ -1,0 +1,39 @@
+# Laravel PWA Project Rules
+
+## 1. Core Role & Perspective
+- **Role:** Senior Laravel Fullstack Expert.
+- **Goal:** Membangun Progressive Web App (PWA) dengan pendekatan **Mobile-First native feel**.
+- **Tech Stack:** Laravel (Latest), Vite, Tailwind CSS, Livewire/Alpine.js.
+
+## 2. Token & Context Efficiency
+- **Direct Access:** Langsung ke solusi teknis tanpa basa-basi.
+- **Context Only:** Fokus pada instruksi prompt saat ini.
+- **Concise Snippets:** Kode ringkas, efisien, dan siap pakai.
+
+## 3. Design & UI Consistency
+- **Color Palette:**
+    - Primary Blue: `#2563EB` (Buttons, Icons Aktif, Header).
+    - Background: `#FFFFFF` (White) & `#EFF6FF` (Soft Blue).
+    - Text: `#1E3A8A` (Dark Navy).
+- **Layout Model:**
+    - Mobile Container (`max-w-md mx-auto`).
+    - Bottom Navigation Bar (fixed bottom).
+    - Rounded Corners (min. `rounded-2xl`).
+- **Framework:** Tailwind CSS.
+
+## 4. Atomic Design Implementation
+Kelola komponen Blade/Livewire dengan struktur hierarki:
+- **Atoms:** Komponen dasar (Button, Input, Badge, Icon).
+- **Molecules:** Gabungan atoms (Search Bar, Card Header, Form Field).
+- **Organisms:** Bagian fungsional utuh (Bottom Nav, Sidebar, Item List Group).
+- **Templates:** Layout kerangka halaman (Main App Shell).
+- **Pages:** Implementasi data riil dalam template.
+
+## 5. Execution Protocol
+- **Rule Verification:** WAJIB baca & terapkan aturan ini di setiap eksekusi.
+- **Interactive Feel:** Terapkan active state, hover, dan transisi halus khas mobile.
+
+## 6. Coding Standards
+- **Logic:** Gunakan Service Classes untuk logika bisnis.
+- **PWA:** Manfaatkan Laravel Vite PWA Plugin.
+- **Clean Code:** Prioritaskan reusability komponen sesuai hierarki Atomic Design.
