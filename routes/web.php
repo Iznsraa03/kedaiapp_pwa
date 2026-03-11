@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
 
 // Splash Screen
@@ -45,6 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil', function () {
         return view('pages.profil', ['user' => auth()->user()]);
     })->name('profil');
+
+    Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil/edit', [ProfileController::class, 'update'])->name('profil.update');
 
     // Activities (User)
     Route::get('/kegiatan/{activity}', [ActivityController::class, 'show'])->name('activities.show');

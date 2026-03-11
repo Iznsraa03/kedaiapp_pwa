@@ -13,22 +13,9 @@
                 @if(Auth::user()->phone)
                 <p class="text-blue-200 text-xs mt-0.5">📞 {{ Auth::user()->phone }}</p>
                 @endif
-            </div>
-            <div class="flex gap-6 mt-2">
-                <div class="text-center">
-                    <p class="text-white font-bold text-lg">12</p>
-                    <p class="text-blue-200 text-xs">Pesanan</p>
-                </div>
-                <div class="w-px bg-white/20"></div>
-                <div class="text-center">
-                    <p class="text-white font-bold text-lg">4</p>
-                    <p class="text-blue-200 text-xs">Favorit</p>
-                </div>
-                <div class="w-px bg-white/20"></div>
-                <div class="text-center">
-                    <p class="text-white font-bold text-lg">2</p>
-                    <p class="text-blue-200 text-xs">Ulasan</p>
-                </div>
+                @if(Auth::user()->address)
+                <p class="text-blue-200 text-xs mt-0.5">📍 {{ Auth::user()->address }}</p>
+                @endif
             </div>
         </div>
     </div>
@@ -58,31 +45,21 @@
     @endif
 
     {{-- Menu Profil --}}
-        @php
-            $menus = [
-                ['icon' => '👤', 'label' => 'Edit Profil', 'desc' => 'Ubah data pribadi kamu'],
-                ['icon' => '📍', 'label' => 'Alamat Saya', 'desc' => 'Kelola alamat pengiriman'],
-                ['icon' => '💳', 'label' => 'Metode Pembayaran', 'desc' => 'Kartu & dompet digital'],
-                ['icon' => '🔔', 'label' => 'Notifikasi', 'desc' => 'Atur preferensi notifikasi'],
-                ['icon' => '🛡️', 'label' => 'Keamanan', 'desc' => 'Password & keamanan akun'],
-                ['icon' => '❓', 'label' => 'Bantuan', 'desc' => 'Pusat bantuan & FAQ'],
-            ];
-        @endphp
-
-        @foreach($menus as $menu)
-        <div class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 shadow-sm active:scale-[0.98] transition-transform duration-150 cursor-pointer">
-            <div class="w-11 h-11 bg-[#EFF6FF] rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
-                {{ $menu['icon'] }}
+        <a href="{{ route('profil.edit') }}"
+           class="bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-4 shadow-sm active:scale-[0.98] transition-transform duration-150">
+            <div class="w-11 h-11 bg-[#EFF6FF] rounded-2xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/>
+                </svg>
             </div>
             <div class="flex-1">
-                <p class="text-[#1E3A8A] font-semibold text-sm">{{ $menu['label'] }}</p>
-                <p class="text-gray-400 text-xs mt-0.5">{{ $menu['desc'] }}</p>
+                <p class="text-[#1E3A8A] font-semibold text-sm">Edit Profil</p>
+                <p class="text-gray-400 text-xs mt-0.5">Ubah data pribadi kamu</p>
             </div>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
             </svg>
-        </div>
-        @endforeach
+        </a>
 
         {{-- Logout --}}
         <form method="POST" action="{{ route('logout') }}">

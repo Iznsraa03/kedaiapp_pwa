@@ -270,6 +270,7 @@
         <x-organisms.bottom-nav />
     </div>
 
+    @stack('modals')
     @livewireScripts
     @stack('scripts')
 

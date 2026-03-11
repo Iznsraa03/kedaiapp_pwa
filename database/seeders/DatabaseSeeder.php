@@ -21,17 +21,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Admin KedaiApp',
                 'nra' => 'KDA-001',
                 'role' => 'admin',
-                'password' => bcrypt('password')
-            ]
-        );
-
-        User::firstOrCreate(
-            ['email' => 'budi@example.com'],
-            [
-                'name' => 'Budi Santoso',
-                'nra' => 'KDA-002',
-                'role' => 'member',
-                'password' => bcrypt('password')
+                'password' => bcrypt('admin@kedai2026')
             ]
         );
     }
