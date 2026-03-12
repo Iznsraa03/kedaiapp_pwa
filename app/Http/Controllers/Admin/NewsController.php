@@ -39,17 +39,30 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'             => 'required|string|max:255',
+        $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug',
             'short_description' => 'nullable|string',
-            'content'           => 'required|string',
             'image_url'         => 'nullable|url',
-            'source_url'        => 'required|url',
             'published_at'      => 'nullable|date',
-        ]);
+        ];
 
-        News::create($request->all());
+        if ($request->filled('source_url')) {
+            $rules['source_url'] = 'required|url';
+            $rules['title'] = 'nullable|string|max:255';
+            $rules['content'] = 'nullable|string';
+        } else {
+            $rules['title'] = 'required|string|max:255';
+            $rules['content'] = 'required|string';
+            $rules['source_url'] = 'nullable|url'; // Ensure it's nullable if not filled
+        }
+
+        $validatedData = $request->validate($rules);
+
+        if (!isset($validatedData['published_at'])) {
+            $validatedData['published_at'] = now();
+        }
+
+        News::create($validatedData);
 
         return redirect()->route('admin.news.index')->with('success', 'News created successfully.');
     }
@@ -75,17 +88,30 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        $request->validate([
-            'title'             => 'required|string|max:255',
+        $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug,' . $news->id,
             'short_description' => 'nullable|string',
-            'content'           => 'required|string',
             'image_url'         => 'nullable|url',
-            'source_url'        => 'required|url',
             'published_at'      => 'nullable|date',
-        ]);
+        ];
 
-        $news->update($request->all());
+        if ($request->filled('source_url')) {
+            $rules['source_url'] = 'required|url';
+            $rules['title'] = 'nullable|string|max:255';
+            $rules['content'] = 'nullable|string';
+        } else {
+            $rules['title'] = 'required|string|max:255';
+            $rules['content'] = 'required|string';
+            $rules['source_url'] = 'nullable|url'; // Ensure it's nullable if not filled
+        }
+
+        $validatedData = $request->validate($rules);
+
+        if (!isset($validatedData['published_at'])) {
+            $validatedData['published_at'] = now();
+        }
+
+        $news->update($validatedData);
 
         return redirect()->route('admin.news.index')->with('success', 'News updated successfully.');
     }
