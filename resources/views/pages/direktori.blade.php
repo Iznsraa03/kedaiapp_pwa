@@ -35,19 +35,23 @@
             data-nra="{{ strtolower($member->nra) }}"
         >
             {{-- Avatar --}}
-            <div class="w-12 h-12 bg-[#EFF6FF] rounded-2xl flex items-center justify-center flex-shrink-0">
-                <span class="text-[#2563EB] font-extrabold text-base">
-                    {{ strtoupper(substr($member->name, 0, 2)) }}
-                </span>
-            </div>
+            @if($member->avatar)
+                <img src="{{ $member->avatar_url }}"
+                     alt="{{ $member->name }}"
+                     class="w-12 h-12 rounded-2xl object-cover flex-shrink-0 border border-[#EFF6FF]">
+            @else
+                <div class="w-12 h-12 bg-[#EFF6FF] rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <span class="text-[#2563EB] font-extrabold text-base">
+                        {{ strtoupper(substr($member->name, 0, 2)) }}
+                    </span>
+                </div>
+            @endif
 
             {{-- Info --}}
             <div class="flex-1 min-w-0">
                 <p class="text-[#1E3A8A] font-bold text-sm truncate">{{ $member->name }}</p>
                 <p class="text-[#2563EB] font-mono text-xs mt-0.5">{{ $member->nra }}</p>
-                @if($member->phone)
-                    <p class="text-gray-400 text-xs mt-0.5 truncate">{{ $member->phone }}</p>
-                @endif
+                <p class="text-gray-400 text-xs mt-0.5 truncate">{{ $member->address ?? '-' }}</p>
             </div>
 
             {{-- Action Buttons --}}

@@ -46,9 +46,9 @@
 
     {{-- Background blobs --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
-        <div class="absolute -top-32 -left-32 w-[500px] h-[500px] bg-white/5 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-32 -right-32 w-[500px] h-[500px] bg-[#1E3A8A]/40 rounded-full blur-3xl"></div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-400/10 rounded-full blur-3xl"></div>
+        <div class="absolute -top-32 -left-32 w-[5 00px] h-125 bg-white/5 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-32 w-125 h-125 bg-navy/40 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 bg-blue-400/10 rounded-full blur-3xl"></div>
     </div>
 
     @php
@@ -74,7 +74,7 @@
             {{-- Live Badge + Clock --}}
             <div class="flex items-center gap-6">
                 <div class="flex items-center gap-2 glass px-4 py-2 rounded-2xl">
-                    <div class="relative w-2.5 h-2.5 flex-shrink-0">
+                    <div class="relative w-2.5 h-2.5 shrink-0">
                         <div class="pulse-dot"></div>
                         <div class="w-2.5 h-2.5 bg-green-400 rounded-full relative z-10"></div>
                     </div>

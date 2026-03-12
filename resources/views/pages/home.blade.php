@@ -23,43 +23,71 @@
         </div>
     </div>
 
-    {{-- ===== PROFIL KAPSULE (terpisah, di luar appbar) ===== --}}
+    {{-- ===== CARD PROFIL ===== --}}
     <div class="px-5 mt-4 mb-1">
-        <div class="flex items-center gap-2">
-            {{-- Card Profil --}}
-            <a href="{{ route('profil') }}"
-               class="flex items-center gap-3 bg-white border border-gray-100 shadow-md active:scale-[0.98] hover:shadow-lg transition-all duration-150 flex-1 px-4 py-3"
-               style="border-radius: 12px;">
-                {{-- Avatar inisial --}}
-                <div class="w-10 h-10 bg-[#EFF6FF] rounded-full flex items-center justify-center flex-shrink-0">
-                    <span class="text-[#2563EB] text-sm font-extrabold leading-none">
-                        {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                    </span>
-                </div>
-                {{-- Info --}}
-                <div class="flex-1 min-w-0">
-                    <p class="text-[#1E3A8A] text-sm font-bold leading-none truncate">{{ Auth::user()->name }}</p>
-                    <p class="text-gray-400 text-[11px] mt-0.5 font-medium">NRA: {{ Auth::user()->nra }}</p>
-                </div>
-                {{-- Badge Aktif + Arrow --}}
-                <div class="flex items-center gap-2 flex-shrink-0">
-                    <span class="bg-green-50 text-green-600 text-[10px] font-semibold px-2.5 py-1 rounded-full">● Aktif</span>
-                    <svg class="w-4 h-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                    </svg>
-                </div>
-            </a>
+        <div class="bg-white border border-gray-100 shadow-md rounded-2xl overflow-hidden">
 
-            {{-- Tombol QR --}}
-            <button
-                onclick="window.dispatchEvent(new CustomEvent('open-qr-sheet'))"
-                class="w-14 h-14 bg-[#2563EB] rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200 active:scale-90 transition-transform duration-150 flex-shrink-0"
-            >
-                <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"/>
-                </svg>
-            </button>
+            {{-- Baris Atas: Avatar + Nama + Tombol QR --}}
+            <div class="flex items-center gap-3 px-4 pt-4 pb-3">
+
+                {{-- Avatar --}}
+                <a href="{{ route('profil') }}" class="flex-shrink-0">
+                    @if(Auth::user()->avatar)
+                        <img src="{{ Auth::user()->avatar_url }}"
+                             alt="{{ Auth::user()->name }}"
+                             class="w-14 h-14 rounded-full object-cover border-2 border-[#EFF6FF]">
+                    @else
+                        <div class="w-14 h-14 bg-[#EFF6FF] rounded-full flex items-center justify-center border-2 border-[#EFF6FF]">
+                            <span class="text-[#2563EB] text-xl font-extrabold leading-none">
+                                {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                            </span>
+                        </div>
+                    @endif
+                </a>
+
+                {{-- Nama + Badge Aktif --}}
+                <div class="flex-1 min-w-0">
+                    <p class="text-[#1E3A8A] text-base font-extrabold leading-tight truncate">{{ Auth::user()->name }}</p>
+                    <span class="inline-flex items-center bg-green-50 text-green-600 text-[10px] font-semibold px-2 py-0.5 rounded-full mt-1">● Aktif</span>
+                </div>
+
+                {{-- Tombol QR --}}
+                <button
+                    onclick="window.dispatchEvent(new CustomEvent('open-qr-sheet'))"
+                    class="w-12 h-12 bg-[#2563EB] rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-200 active:scale-90 transition-transform duration-150 flex-shrink-0 gap-0.5"
+                >
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"/>
+                    </svg>
+                    <span class="text-white text-[9px] font-semibold leading-none">QR</span>
+                </button>
+
+            </div>
+
+            {{-- Divider --}}
+            <div class="mx-4 border-t border-gray-100"></div>
+
+            {{-- Baris Bawah: NoReg & Tanggal Bergabung --}}
+            <div class="flex items-center px-4 py-3 gap-4">
+
+                {{-- NoReg --}}
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide">NoReg</p>
+                    <p class="text-[#1E3A8A] text-sm font-bold font-mono tracking-wider mt-0.5 truncate">{{ Auth::user()->nra ?? '-' }}</p>
+                </div>
+
+                {{-- Separator vertikal --}}
+                <div class="w-px h-8 bg-gray-100 flex-shrink-0"></div>
+
+                {{-- Tanggal Bergabung --}}
+                <div class="flex-1 min-w-0">
+                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide">Tanggal Bergabung</p>
+                    <p class="text-[#1E3A8A] text-sm font-bold mt-0.5 truncate">{{ Auth::user()->created_at->translatedFormat('d M Y') }}</p>
+                </div>
+
+            </div>
+
         </div>
     </div>
 

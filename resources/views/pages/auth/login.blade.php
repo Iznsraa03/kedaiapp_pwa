@@ -111,18 +111,18 @@
         <form method="POST" action="{{ route('login.post') }}" class="space-y-4">
             @csrf
 
-            {{-- NRA --}}
+            {{-- Email --}}
             <div class="s2 space-y-2">
                 <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">
-                    Nomor Registrasi Anggota
+                    Email
                 </label>
-                <div class="field-input {{ $errors->has('nra') ? 'error' : '' }}">
+                <div class="field-input {{ $errors->has('email') ? 'error' : '' }}">
                     <span class="icon">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12A4.5 4.5 0 0112 16.5C9.695 16.5 7.747 15.006 7 12H3C3.753 15.006 5.695 16.5 8 16.5A4.5 4.5 0 0012 21C14.305 21 16.253 19.506 17 16.5H21C20.247 19.506 18.305 21 16 21A4.5 4.5 0 0112 16.5V12C12 9.695 10.506 7.747 7.5 7H3M12 3V7.5C12 9.695 10.506 11.747 7.5 12H3"/>
                         </svg>
                     </span>
-                    <input type="text" name="nra" value="{{ old('nra') }}" placeholder="Masukkan NRA kamu" autocomplete="username">
+                    <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email kamu" autocomplete="username">
                 </div>
             </div>
 

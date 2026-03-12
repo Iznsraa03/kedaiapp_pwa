@@ -17,19 +17,20 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'nra'      => 'required|string',
+            'email'    => 'required|string|email',
             'password' => 'required|string',
         ], [
-            'nra.required'      => 'NRA wajib diisi.',
+            'email.required'    => 'Email wajib diisi.',
+            'email.email'       => 'Email tidak valid.',
             'password.required' => 'Password wajib diisi.',
         ]);
 
-        $user = User::where('nra', $request->nra)->first();
+        $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             return back()->withErrors([
-                'nra' => 'NRA atau password salah.',
-            ])->withInput($request->only('nra'));
+                'email' => 'Email atau password salah.',
+            ])->withInput($request->only('email'));
         }
 
         Auth::login($user, $request->boolean('remember'));
@@ -53,6 +54,7 @@ class AuthController extends Controller
             'nra_roman'             => ['required', 'string', 'regex:/^(M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3}))$/i'],
             'nra_year'              => 'required|digits:2',
             'phone'                 => 'nullable|string|max:20',
+            'avatar'                => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'password'              => 'required|string|min:8|confirmed',
         ], [
             'name.required'         => 'Nama lengkap wajib diisi.',
@@ -82,8 +84,14 @@ class AuthController extends Controller
             return back()->withErrors(['nra_seq' => 'NRA ' . $nra . ' sudah terdaftar.'])->withInput();
         }
 
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+        }
+
         $user = User::create([
             'name'     => $request->name,
+            'avatar'   => $avatarPath,
             'email'    => $request->email,
             'nra'      => $nra,
             'phone'    => $request->phone,

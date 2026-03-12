@@ -120,8 +120,42 @@
         </div>
         @endif
 
-        <form method="POST" action="{{ route('register.post') }}" class="space-y-3.5">
+        <form method="POST" action="{{ route('register.post') }}" enctype="multipart/form-data" class="space-y-3.5">
             @csrf
+
+            {{-- Foto Profil --}}
+            <div class="s2" x-data="{ preview: null }">
+                <div class="flex flex-col items-center gap-3 py-2">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-3xl bg-[#EFF6FF] border-2 border-dashed border-blue-200 flex items-center justify-center overflow-hidden">
+                            <template x-if="!preview">
+                                <div class="flex flex-col items-center gap-1">
+                                    <svg class="w-7 h-7 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                                    </svg>
+                                    <span class="text-blue-300 text-[10px] font-medium">Foto</span>
+                                </div>
+                            </template>
+                            <template x-if="preview">
+                                <img :src="preview" class="w-full h-full object-cover">
+                            </template>
+                        </div>
+                        <label for="avatar-register"
+                            class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center cursor-pointer shadow-md active:scale-90 transition-transform">
+                            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/>
+                            </svg>
+                        </label>
+                    </div>
+                    <input id="avatar-register" type="file" name="avatar" accept="image/*" class="hidden"
+                        @change="preview = URL.createObjectURL($event.target.files[0])">
+                    <p class="text-gray-400 text-xs text-center">Foto profil <span class="text-gray-300">(opsional, maks. 2MB)</span></p>
+                    @error('avatar')
+                        <p class="text-red-500 text-xs text-center">{{ $message }}</p>
+                    @enderror
+                </div>
+            </div>
 
             {{-- Nama Lengkap --}}
             <div class="s2 space-y-1.5">
@@ -149,97 +183,95 @@
                 </div>
             </div>
 
-            {{-- NRA --}}
-            <div class="s4 space-y-1.5">
-                <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">NRA</label>
-                <p class="text-gray-400 text-xs -mt-0.5">Format: <span class="font-mono text-[#2563EB]">000.KD.XXII.23</span></p>
-
-                {{-- Preview NRA --}}
-                <div class="flex items-center gap-1.5 bg-[#EFF6FF] rounded-2xl px-4 py-2.5 border-2 {{ $errors->hasAny(['nra_seq','nra_roman','nra_year']) ? 'border-red-300' : 'border-transparent' }}">
-                    <svg class="w-4 h-4 text-[#2563EB] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"/>
-                    </svg>
-                    <span class="font-mono text-[#1E3A8A] font-bold text-sm tracking-wider" id="nra-preview">___  .  KD  .  ___  .  __</span>
-                </div>
-
-                {{-- Input Segments --}}
-                <div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5">
-
-                    {{-- Segmen 1: Nomor urut --}}
-                    <div>
-                        <input type="text" name="nra_seq" id="nra-seq"
-                            value="{{ old('nra_seq') }}"
-                            maxlength="5"
-                            inputmode="numeric"
-                            placeholder="001"
-                            oninput="this.value=this.value.replace(/\D/g,''); updateNraPreview(); if(this.value.length>=3) document.getElementById('nra-roman').focus()"
-                            class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_seq') ? 'border-red-400' : 'border-gray-200' }}">
-                        <p class="text-gray-400 text-[10px] text-center mt-1">No. Urut</p>
-                    </div>
-
-                    <span class="text-gray-400 font-bold text-lg text-center pb-4">.</span>
-
-                    {{-- Segmen 2: KD (tetap) --}}
-                    <div class="bg-[#2563EB] rounded-xl px-2 py-2.5 text-center mb-4">
-                        <span class="font-mono text-white font-extrabold text-sm tracking-widest">KD</span>
-                    </div>
-
-                    <span class="text-gray-400 font-bold text-lg text-center pb-4">.</span>
-
-                    {{-- Segmen 3: Angka Romawi --}}
-                    <div>
-                        <input type="text" name="nra_roman" id="nra-roman"
-                            value="{{ old('nra_roman') }}"
-                            maxlength="10"
-                            placeholder="XXII"
-                            oninput="this.value=this.value.toUpperCase().replace(/[^IVXLCDM]/g,''); updateNraPreview()"
-                            onkeyup="if(this.value.length>=1 && event.key==='.') document.getElementById('nra-year').focus()"
-                            class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_roman') ? 'border-red-400' : 'border-gray-200' }}">
-                        <p class="text-gray-400 text-[10px] text-center mt-1">Romawi</p>
-                    </div>
-                </div>
-
-                {{-- Segmen 4: Tahun --}}
-                <div class="flex items-center gap-1.5 mt-0.5">
-                    <span class="text-gray-400 font-bold text-lg">.</span>
-                    <div class="w-24">
-                        <input type="text" name="nra_year" id="nra-year"
-                            value="{{ old('nra_year') }}"
-                            maxlength="2"
-                            inputmode="numeric"
-                            placeholder="23"
-                            oninput="this.value=this.value.replace(/\D/g,''); updateNraPreview()"
-                            class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_year') ? 'border-red-400' : 'border-gray-200' }}">
-                        <p class="text-gray-400 text-[10px] text-center mt-1">Tahun (2 digit)</p>
-                    </div>
-                    <p class="text-gray-400 text-xs">contoh: <span class="font-mono text-[#2563EB]">{{ date('y') }}</span></p>
-                </div>
-
-                @if($errors->hasAny(['nra_seq','nra_roman','nra_year']))
-                    <div class="space-y-0.5">
-                        @foreach(['nra_seq','nra_roman','nra_year'] as $nraField)
-                            @error($nraField)<p class="text-red-500 text-xs">{{ $message }}</p>@enderror
-                        @endforeach
-                    </div>
-                @endif
-            </div>
-
-            {{-- No. Telepon --}}
-            <div class="s5 space-y-1.5">
-                <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">No. Telepon <span class="text-gray-400 font-normal normal-case tracking-normal">(opsional)</span></label>
-                <div class="field-input {{ $errors->has('phone') ? 'error' : '' }}">
-                    <span class="icon">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
-                        </svg>
-                    </span>
-                    <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx" autocomplete="tel">
-                </div>
-            </div>
-
-            {{-- Password --}}
-            <div class="s6 space-y-1.5">
-                <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Password</label>
+                                    {{-- NRA --}}
+                                    <div class="s4 space-y-1.5">
+                                        <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">NRA</label>
+                                        <p class="text-gray-400 text-xs -mt-0.5">Format: <span class="font-mono text-[#2563EB]">000.KD.XXII.23</span></p>
+                        
+                                        {{-- Preview NRA --}}
+                                        <div class="flex items-center gap-1.5 bg-[#EFF6FF] rounded-2xl px-4 py-2.5 border-2 {{ $errors->hasAny(['nra_seq','nra_roman','nra_year']) ? 'border-red-300' : 'border-transparent' }}">
+                                            <svg class="w-4 h-4 text-[#2563EB] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"/>
+                                                </svg>
+                                            <span class="font-mono text-[#1E3A8A] font-bold text-sm tracking-wider" id="nra-preview">___  .  KD  .  ___  .  __</span>
+                                        </div>
+                        
+                                        {{-- Input Segments --}}
+                                        <div class="grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-1.5">
+                        
+                                            {{-- Segmen 1: Nomor urut --}}
+                                            <div>
+                                                <input type="text" name="nra_seq" id="nra-seq"
+                                                    value="{{ old('nra_seq') }}"
+                                                    maxlength="5"
+                                                    inputmode="numeric"
+                                                    placeholder="001"
+                                                    oninput="this.value=this.value.replace(/\D/g,''); updateNraPreview(); if(this.value.length>=3) document.getElementById('nra-roman').focus()"
+                                                    class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_seq') ? 'border-red-400' : 'border-gray-200' }}">
+                                                <p class="text-gray-400 text-[10px] text-center mt-1">No. Urut</p>
+                                            </div>
+                        
+                                            <span class="text-gray-400 font-bold text-lg text-center pb-4">.</span>
+                        
+                                            {{-- Segmen 2: KD (tetap) --}}
+                                            <div class="bg-[#2563EB] rounded-xl px-2 py-2.5 text-center mb-4">
+                                                <span class="font-mono text-white font-extrabold text-sm tracking-widest">KD</span>
+                                            </div>
+                        
+                                            <span class="text-gray-400 font-bold text-lg text-center pb-4">.</span>
+                        
+                                            {{-- Segmen 3: Angka Romawi --}}
+                                            <div>
+                                                <input type="text" name="nra_roman" id="nra-roman"
+                                                    value="{{ old('nra_roman') }}"
+                                                    maxlength="10"
+                                                    placeholder="XXII"
+                                                    oninput="this.value=this.value.toUpperCase().replace(/[^IVXLCDM]/g,''); updateNraPreview()"
+                                                    onkeyup="if(this.value.length>=1 && event.key==='.') document.getElementById('nra-year').focus()"
+                                                    class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_roman') ? 'border-red-400' : 'border-gray-200' }}">
+                                                <p class="text-gray-400 text-[10px] text-center mt-1">Romawi</p>
+                                            </div>
+                                        </div>
+                        
+                                        {{-- Segmen 4: Tahun --}}
+                                        <div class="flex items-center gap-1.5 mt-0.5">
+                                            <span class="text-gray-400 font-bold text-lg">.</span>
+                                            <div class="w-24">
+                                                <input type="text" name="nra_year" id="nra-year"
+                                                    value="{{ old('nra_year') }}"
+                                                    maxlength="2"
+                                                    inputmode="numeric"
+                                                    placeholder="23"
+                                                    oninput="this.value=this.value.replace(/\D/g,''); updateNraPreview()"
+                                                    class="w-full px-3 py-2.5 bg-white border-2 rounded-xl text-center font-mono text-[#1E3A8A] font-bold text-sm focus:outline-none focus:border-[#2563EB] transition-all {{ $errors->has('nra_year') ? 'border-red-400' : 'border-gray-200' }}">
+                                                <p class="text-gray-400 text-[10px] text-center mt-1">Tahun (2 digit)</p>
+                                            </div>
+                                            <p class="text-gray-400 text-xs">contoh: <span class="font-mono text-[#2563EB]">{{ date('y') }}</span></p>
+                                        </div>
+                        
+                                        @if($errors->hasAny(['nra_seq','nra_roman','nra_year']))
+                                            <div class="space-y-0.5">
+                                                @foreach(['nra_seq','nra_roman','nra_year'] as $nraField)
+                                                    @error($nraField)<p class="text-red-500 text-xs">{{ $message }}</p>@enderror
+                                                @endforeach
+                                            </div>
+                                        @endif
+                                    </div>
+                        
+                                    {{-- No. Telepon --}}
+                                    <div class="s5 space-y-1.5">                            <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">No. Telepon <span class="text-gray-400 font-normal normal-case tracking-normal">(opsional)</span></label>
+                            <div class="field-input {{ $errors->has('phone') ? 'error' : '' }}">
+                                <span class="icon">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+                                    </svg>
+                                </span>
+                                <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx" autocomplete="tel">
+                            </div>
+                        </div>
+            
+                        {{-- Password --}}
+                        <div class="s5 space-y-1.5">                <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Password</label>
                 <div class="field-input {{ $errors->has('password') ? 'error' : '' }}">
                     <span class="icon">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
@@ -300,6 +332,8 @@
 
     </div>
 </div>
+
+
 
 <script>
 function updateNraPreview() {

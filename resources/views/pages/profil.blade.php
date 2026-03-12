@@ -3,9 +3,15 @@
     {{-- Header --}}
     <div class="bg-primary px-5 pt-12 pb-10 rounded-b-3xl">
         <div class="flex flex-col items-center gap-3">
-            <div class="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center text-4xl">
-                👤
+            @if(Auth::user()->avatar)
+            <div class="w-20 h-20 rounded-3xl overflow-hidden border-2 border-white/30 shadow-lg">
+                <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="Foto Profil" class="w-full h-full object-cover">
             </div>
+            @else
+            <div class="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center">
+                <span class="text-white text-4xl font-extrabold">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+            </div>
+            @endif
             <div class="text-center">
                 <h1 class="text-white text-lg font-bold">{{ Auth::user()->name }}</h1>
                 <p class="text-blue-200 text-xs font-medium mt-0.5">NRA: {{ Auth::user()->nra }}</p>
