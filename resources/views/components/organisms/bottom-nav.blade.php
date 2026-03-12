@@ -21,6 +21,16 @@
             <span class="text-[10px] font-medium transition-colors duration-200 {{ request()->routeIs('pesanan') ? 'text-[#2563EB]' : 'text-gray-400' }}">Kegiatan</span>
         </a>
 
+        {{-- Berita --}}
+        <a href="{{ route('news.index') }}"
+           class="flex flex-col items-center gap-1 px-4 py-1 rounded-2xl transition-all duration-200
+                  {{ request()->routeIs('news.index') ? 'nav-active' : 'text-gray-400 hover:text-blue-500' }}">
+            <svg class="w-6 h-6 transition-colors duration-200" fill="{{ request()->routeIs('news.index') ? '#EFF6FF' : 'none' }}" viewBox="0 0 24 24" stroke="{{ request()->routeIs('news.index') ? '#2563EB' : 'currentColor' }}" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 21h4.5m-9-18.375V2.25A2.25 2.25 0 004.5 0H3.75A2.25 2.25 0 001.5 2.25v1.5m0 12.75V21.75a2.25 2.25 0 002.25 2.25h1.5a2.25 2.25 0 002.25-2.25v-1.5m10.5-12.75h1.5a2.25 2.25 0 012.25 2.25v1.5m0 12.75V21.75a2.25 2.25 0 00-2.25-2.25h-1.5a2.25 2.25 0 00-2.25 2.25v1.5M7.5 7.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5M16.5 7.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5m-1.5 1.5h1.5"/>
+            </svg>
+            <span class="text-[10px] font-medium transition-colors duration-200 {{ request()->routeIs('news.index') ? 'text-[#2563EB]' : 'text-gray-400' }}">Berita</span>
+        </a>
+
         {{-- Direktori --}}
         <a href="{{ route('direktori') }}"
            class="flex flex-col items-center gap-1 px-4 py-1 rounded-2xl transition-all duration-200
