@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ActivityController as AdminActivityController;
+use App\Models\News;
 
 // Splash Screen
 Route::get('/', function () {
@@ -26,7 +27,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
         $activities = \App\Models\Activity::orderBy('starts_at')->get();
-        return view('pages.home', compact('activities'));
+        $latestNews = News::orderBy('published_at', 'desc')->take(3)->get();
+        return view('pages.home', compact('activities', 'latestNews'));
     })->name('home');
 
     Route::get('/kegiatan', function () {
@@ -50,6 +52,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profil/edit', [ProfileController::class, 'edit'])->name('profil.edit');
     Route::put('/profil/edit', [ProfileController::class, 'update'])->name('profil.update');
 
+    // News (User Frontend)
+    Route::get('/berita', [\App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+
     // Activities (User)
     Route::get('/kegiatan/{activity}', [ActivityController::class, 'show'])->name('activities.show');
     Route::post('/kegiatan/scan', [ActivityController::class, 'scan'])->name('activities.scan');
@@ -63,5 +68,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/kegiatan/{activity}/display',[AdminActivityController::class, 'display'])->name('activities.display');
         Route::get('/kegiatan/{activity}/stream', [AdminActivityController::class, 'stream'])->name('activities.stream');
         Route::post('/kegiatan/{activity}/scan',  [AdminActivityController::class, 'scan'])->name('activities.scan');
+
+        // News Management
+        Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
+        Route::post('/news/fetch-data', [\App\Http\Controllers\Admin\NewsController::class, 'fetchNewsData'])->name('news.fetch-data');
     });
 });
