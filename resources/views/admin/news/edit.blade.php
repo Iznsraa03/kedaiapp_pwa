@@ -13,15 +13,31 @@
         </div>
 
         <div class="flex-1 px-5 py-6 space-y-4">
+            {{-- Error --}}
+            @if ($errors->any())
+            <div class="flex items-start gap-3 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
+                <div class="w-8 h-8 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+                    </svg>
+                </div>
+                <div class="space-y-0.5">
+                    @foreach ($errors->all() as $error)
+                        <p class="text-red-500 text-sm font-medium leading-snug">{{ $error }}</p>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm p-6">
                 <form method="POST" action="{{ route('admin.news.update', $news) }}" enctype="multipart/form-data" x-data="{
-                        image_preview: '{{ $news->image_url }}', // For image file preview,
+                        image_preview: '{{ $news->image_url ? Storage::url($news->image_url) : null }}', // For image file preview,
                         handleImageUpload: function(event) {
                             const file = event.target.files[0];
                             if (file) {
                                 this.image_preview = URL.createObjectURL(file);
                             } else {
-                                this.image_preview = '{{ $news->image_url }}';
+                                this.image_preview = '{{ $news->image_url ? Storage::url($news->image_url) : null }}';
                             }
                         }
                     }">
@@ -69,7 +85,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </span>
-                            <textarea name="short_description" id="short_description" rows="3" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" placeholder="Short description of the news">{{ old('short_description', $news->short_description) }}</textarea>
+                            <textarea name="short_description" id="short_description" rows="3" placeholder="Short description of the news">{{ old('short_description', $news->short_description) }}</textarea>
                         </div>
                         @error('short_description')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -85,7 +101,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </span>
-                            <textarea name="content" id="content" rows="10" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" placeholder="Full content of the news article">{{ old('content', $news->content) }}</textarea>
+                            <textarea name="content" id="content" rows="10" placeholder="Full content of the news article">{{ old('content', $news->content) }}</textarea>
                         </div>
                         @error('content')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -101,7 +117,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                 </svg>
                             </span>
-                            <input type="file" name="image" id="image" accept="image/*" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" @change="handleImageUpload">
+                            <input type="file" name="image" id="image" accept="image/*" class="hidden" @change="handleImageUpload">
+                            <label for="image" class="flex-1 h-full bg-transparent border-none outline-none text-sm font-medium text-gray-400 p-3 cursor-pointer">
+                                <span x-text="image_preview ? 'Change Image' : 'Choose Image'"></span>
+                            </label>
                         </div>
                         @error('image')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -109,22 +128,6 @@
                         <template x-if="image_preview">
                             <img :src="image_preview" alt="Image Preview" class="mt-2 max-h-40 object-cover rounded-lg">
                         </template>
-                    </div>
-
-                    <!-- Source URL -->
-                    <div class="mb-4 space-y-1.5">
-                        <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Source URL</label>
-                        <div class="field-input {{ $errors->has('source_url') ? 'error' : '' }}">
-                            <span class="icon">
-                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.364 0a4.5 4.5 0 01-1.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.364 0l1.757-1.757m-1.757 1.757L13.19 8.688" />
-                                </svg>
-                            </span>
-                            <input type="url" name="source_url" id="source_url" value="{{ old('source_url', $news->source_url) }}" placeholder="https://example.com/news-article">
-                        </div>
-                        @error('source_url')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
                     </div>
 
                     <!-- Published At -->

@@ -13,9 +13,25 @@
         </div>
 
         <div class="flex-1 px-5 py-6 space-y-4">
+            {{-- Error --}}
+            @if ($errors->any())
+            <div class="flex items-start gap-3 bg-red-50 border border-red-100 rounded-2xl px-4 py-3">
+                <div class="w-8 h-8 bg-red-100 rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <svg class="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/>
+                    </svg>
+                </div>
+                <div class="space-y-0.5">
+                    @foreach ($errors->all() as $error)
+                        <p class="text-red-500 text-sm font-medium leading-snug">{{ $error }}</p>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
             <div class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm p-6">
                 <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data" x-data="{
-                        manualEntry: {{ old('source_url') ? 'false' : 'true' }},
+                        manualEntry: {{ old('source_url') && !($errors->has('title') || $errors->has('content') || $errors->has('image')) ? 'false' : 'true' }},
                         source_url: '{{ old('source_url') }}',
                         title: '{{ old('title') }}',
                         slug: '{{ old('slug') }}',
@@ -26,12 +42,18 @@
                         loading: false,
                         fetchNews: async function() {
                             this.loading = true;
+                            // Clear manual fields before fetching
+                            this.title = '';
+                            this.slug = '';
+                            this.short_description = '';
+                            this.content = '';
+                            this.image_preview = null;
                             try {
                                 const response = await fetch('{{ route('admin.news.fetch-data') }}', {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name='csrf-token']').content
                                     },
                                     body: JSON.stringify({ url: this.source_url })
                                 });
@@ -41,8 +63,7 @@
                                     this.slug = data.news.slug;
                                     this.short_description = data.news.short_description;
                                     this.content = data.news.content;
-                                    // For image_url, if fetched, we display it as a preview. No actual upload yet.
-                                    this.image_preview = data.news.image_url;
+                                    this.image_preview = data.news.image_url; // Preview fetched image
                                     alert('News content fetched successfully!');
                                 } else {
                                     alert(data.message || 'Failed to fetch news content.');
@@ -75,7 +96,7 @@
                         </button>
                     </div>
 
-                    <!-- Source URL (conditionally displayed) -->
+                    <!-- Source URL -->
                     <div class="mb-4 space-y-1.5" x-show="!manualEntry">
                         <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Source URL</label>
                         <div class="field-input {{ $errors->has('source_url') ? 'error' : '' }}">
@@ -136,7 +157,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </span>
-                            <textarea name="short_description" id="short_description" x-model="short_description" rows="3" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" placeholder="Short description of the news"></textarea>
+                            <textarea name="short_description" id="short_description" x-model="short_description" rows="3" placeholder="Short description of the news"></textarea>
                         </div>
                         @error('short_description')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -152,7 +173,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                 </svg>
                             </span>
-                            <textarea name="content" id="content" x-model="content" rows="10" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" placeholder="Full content of the news article" :required="manualEntry"></textarea>
+                            <textarea name="content" id="content" x-model="content" rows="10" placeholder="Full content of the news article" :required="manualEntry"></textarea>
                         </div>
                         @error('content')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -168,7 +189,10 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
                                 </svg>
                             </span>
-                            <input type="file" name="image" id="image" accept="image/*" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3" @change="handleImageUpload">
+                            <input type="file" name="image" id="image" accept="image/*" class="hidden" @change="handleImageUpload">
+                            <label for="image" class="flex-1 h-full bg-transparent border-none outline-none text-sm font-medium text-gray-400 p-3 cursor-pointer">
+                                <span x-text="image_preview ? 'Change Image' : 'Choose Image'"></span>
+                            </label>
                         </div>
                         @error('image')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -187,7 +211,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12v-.008z" />
                                 </svg>
                             </span>
-                            <input type="datetime-local" name="published_at" id="published_at" x-model="published_at" class="block w-full h-full bg-transparent border-none outline-none text-sm font-medium text-[#1E3A8A] p-3">
+                            <input type="datetime-local" name="published_at" id="published_at" x-model="published_at" placeholder="yyyy-mm-ddThh:mm">
                         </div>
                         @error('published_at')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
