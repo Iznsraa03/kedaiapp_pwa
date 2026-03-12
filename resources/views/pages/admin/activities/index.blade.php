@@ -20,13 +20,22 @@
             </div>
 
             {{-- Tombol Tambah --}}
-            <a href="{{ route('admin.activities.create') }}"
-               class="flex-shrink-0 mt-1 flex items-center gap-2 bg-white text-[#1E3A8A] font-bold text-sm px-4 py-2.5 rounded-2xl shadow-lg active:scale-95 transition-all duration-150">
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                </svg>
-                Tambah
-            </a>
+            <div class="flex items-center gap-2">
+                <a href="{{ route('admin.news.create') }}"
+                   class="flex-shrink-0 mt-1 flex items-center gap-2 bg-white text-[#1E3A8A] font-bold text-sm px-4 py-2.5 rounded-2xl shadow-lg active:scale-95 transition-all duration-150">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    News
+                </a>
+                <a href="{{ route('admin.activities.create') }}"
+                   class="flex-shrink-0 mt-1 flex items-center gap-2 bg-white text-[#1E3A8A] font-bold text-sm px-4 py-2.5 rounded-2xl shadow-lg active:scale-95 transition-all duration-150">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                    </svg>
+                    Tambah
+                </a>
+            </div>
         </div>
 
         {{-- Stats --}}

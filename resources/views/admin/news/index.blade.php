@@ -9,9 +9,6 @@
         <div class="flex-1 px-5 py-6 space-y-4">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-[#1E3A8A] font-bold text-lg">Daftar Berita</h3>
-                <a href="{{ route('admin.news.create') }}" class="inline-flex items-center px-4 py-2 bg-[#2563EB] border border-transparent rounded-full font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:scale-95 transition ease-in-out duration-150">
-                    Add News
-                </a>
             </div>
 
             @if ($news->isEmpty())

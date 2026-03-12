@@ -7,6 +7,7 @@ use App\Models\News;
 use App\Services\NewsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage; // Import Storage facade
 
 class NewsController extends Controller
 {
@@ -42,7 +43,7 @@ class NewsController extends Controller
         $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug',
             'short_description' => 'nullable|string',
-            'image_url'         => 'nullable|url',
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image upload
             'published_at'      => 'nullable|date',
         ];
 
@@ -53,10 +54,17 @@ class NewsController extends Controller
         } else {
             $rules['title'] = 'required|string|max:255';
             $rules['content'] = 'required|string';
-            $rules['source_url'] = 'nullable|url'; // Ensure it's nullable if not filled
+            $rules['source_url'] = 'nullable|url';
         }
 
         $validatedData = $request->validate($rules);
+
+        if ($request->hasFile('image')) {
+            $validatedData['image_url'] = Storage::url($request->file('image')->store('public/news_images'));
+        } else {
+            $validatedData['image_url'] = null;
+        }
+        unset($validatedData['image']); // Remove 'image' key as we stored 'image_url'
 
         if (!isset($validatedData['published_at'])) {
             $validatedData['published_at'] = now();
@@ -91,7 +99,7 @@ class NewsController extends Controller
         $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug,' . $news->id,
             'short_description' => 'nullable|string',
-            'image_url'         => 'nullable|url',
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image upload
             'published_at'      => 'nullable|date',
         ];
 
@@ -102,10 +110,24 @@ class NewsController extends Controller
         } else {
             $rules['title'] = 'required|string|max:255';
             $rules['content'] = 'required|string';
-            $rules['source_url'] = 'nullable|url'; // Ensure it's nullable if not filled
+            $rules['source_url'] = 'nullable|url';
         }
 
         $validatedData = $request->validate($rules);
+
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($news->image_url && Storage::exists(str_replace('/storage', 'public', $news->image_url))) {
+                Storage::delete(str_replace('/storage', 'public', $news->image_url));
+            }
+            $validatedData['image_url'] = Storage::url($request->file('image')->store('public/news_images'));
+        } else if ($request->boolean('remove_image')) { // Assuming a checkbox for image removal
+            if ($news->image_url && Storage::exists(str_replace('/storage', 'public', $news->image_url))) {
+                Storage::delete(str_replace('/storage', 'public', $news->image_url));
+            }
+            $validatedData['image_url'] = null;
+        }
+        unset($validatedData['image']);
 
         if (!isset($validatedData['published_at'])) {
             $validatedData['published_at'] = now();
@@ -121,6 +143,10 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
+        // Delete image if exists
+        if ($news->image_url && Storage::exists(str_replace('/storage', 'public', $news->image_url))) {
+            Storage::delete(str_replace('/storage', 'public', $news->image_url));
+        }
         $news->delete();
 
         return redirect()->route('admin.news.index')->with('success', 'News deleted successfully.');
