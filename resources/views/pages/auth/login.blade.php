@@ -87,7 +87,10 @@
                 <img src="/logo/KDCW.png" alt="KeDai Computerworks" class="w-full h-full object-contain">
             </div>
             <div>
-                <h1 class="text-white text-2xl font-extrabold tracking-tight">KeDai Computerworks</h1>
+                <h1 class="text-white tracking-tight flex items-baseline justify-center">
+                    <span class="font-rockwell text-2xl">KeDai</span>
+                    <span class="font-staccato text-3xl ml-1">Computerworks</span>
+                </h1>
                 <p class="text-blue-200 text-sm mt-1">Selamat datang kembali 👋</p>
             </div>
         </div>

@@ -28,7 +28,10 @@
 
             {{-- App Name --}}
             <div class="text-center">
-                <h1 class="text-3xl font-extrabold text-white tracking-wide">KeDai Computerworks</h1>
+                <h1 class="text-white tracking-tight flex items-baseline justify-center">
+                    <span class="font-rockwell text-3xl">KeDai</span>
+                    <span class="font-staccato text-4xl ml-1">Computerworks</span>
+                </h1>
                 <p class="text-blue-200 text-sm mt-2 tracking-widest uppercase">Management System</p>
             </div>
         </div>

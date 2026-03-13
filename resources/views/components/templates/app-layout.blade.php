@@ -47,8 +47,11 @@
                 <img src="/logo/KDCW.png" alt="KeDai Computerworks" style="width:100%;height:100%;object-fit:contain;">
             </div>
             <div style="text-align:center;">
-                <h1 style="font-size:1.875rem;font-weight:800;color:white;letter-spacing:0.05em;">KeDai Computerworks</h1>
-                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:8px;letter-spacing:0.2em;text-transform:uppercase;">Management System</p>
+                <h1 style="color:white;letter-spacing:0.02em;display:flex;align-items:baseline;justify-content:center;">
+                    <span style="font-family:'RockwellBT', serif; font-weight:bold; font-size:1.875rem;">KeDai</span>
+                    <span style="font-family:'Staccato22BT', cursive; font-size:2.5rem; margin-left:6px;">Computerworks</span>
+                </h1>
+                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:2px;letter-spacing:0.2em;text-transform:uppercase;">Management System</p>
             </div>
         </div>
 
@@ -118,7 +121,11 @@
                     <img src="/logo/KDCW.png" alt="KeDai Computerworks" class="w-full h-full object-contain">
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-[#1E3A8A] font-extrabold text-sm">Pasang KeDai Computerworks</p>
+                    <p class="text-[#1E3A8A] font-extrabold text-sm flex items-baseline gap-1">
+                        Pasang 
+                        <span class="font-rockwell text-sm">KeDai</span>
+                        <span class="font-staccato text-base -ml-0.5">Computerworks</span>
+                    </p>
                     <p class="text-gray-400 text-xs mt-0.5 leading-snug">Tambah ke layar utama untuk akses lebih cepat!</p>
                 </div>
                 <div class="flex flex-col gap-1.5 flex-shrink-0">
@@ -214,7 +221,12 @@
                         <div class="w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0 text-white font-extrabold text-sm">3</div>
                         <div class="flex-1 pt-1">
                             <p class="text-[#1E3A8A] font-semibold text-sm">Tap <span class="text-[#2563EB]">"Add"</span> di pojok kanan atas</p>
-                            <p class="text-gray-400 text-xs mt-0.5">Icon KedaiApp akan muncul di homescreen kamu</p>
+                            <p class="text-gray-400 text-xs mt-0.5 flex items-baseline gap-1">
+                                Icon 
+                                <span class="font-rockwell text-[10px]">KeDai</span>
+                                <span class="font-staccato text-sm -ml-0.5">Computerworks</span>
+                                akan muncul di homescreen kamu
+                            </p>
                         </div>
                     </div>
 

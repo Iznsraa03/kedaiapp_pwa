@@ -1,41 +1,31 @@
 @import 'tailwindcss';
 
+/* ===== Custom Fonts ===== */
+@font-face {
+    font-family: 'RockwellBT';
+    src: url('../../public/fonts/RockwellStd-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Staccato22BT';
+    src: url('../../public/fonts/Staccato222.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* ===== Atomic Design: Base Styles ===== */
 
-/* Bottom Nav Active State */
-.nav-active {
-    color: #2563EB;
-}
-
-/* PWA safe area padding */
-.pb-safe {
-    padding-bottom: env(safe-area-inset-bottom, 12px);
-}
-
-/* Scrollbar hide utility */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-/* Splash animations */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeOut {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-.animate-fade-in-up { animation: fadeInUp .6s cubic-bezier(.22,.68,0,1.2) both; }
-.animate-fade-out   { animation: fadeOut .5s ease forwards; }
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* ... rest of styles ... */
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-rockwell: 'RockwellBT', serif;
+    --font-staccato: 'Staccato22BT', cursive;
 
     --color-primary: #2563EB;
     --color-primary-dark: #1D4ED8;
