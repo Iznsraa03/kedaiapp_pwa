@@ -11,11 +11,11 @@
         {{-- Top Bar --}}
         <div class="relative z-10 flex items-center justify-between">
             <div class="flex items-center">
-                <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shrink-0">
-                    <img src="/logo/KDCW.png" alt="Logo" class="w-9 h-9">
+                <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center shrink-0">
+                    <img src="/logo/KDCW.png" alt="Logo" class="w-6 h-6">
                 </div>
                 <div class="flex flex-col px-4">
-                    <img src="/logo/KD.png" alt="KeDai Computerworks" class="h-8 w-auto">
+                    <img src="/logo/KD.png" alt="KeDai Computerworks" class="h-6 w-auto">
                 </div>
             </div>
             {{-- Notif Bell --}}
@@ -61,37 +61,31 @@
                         Aktif</span>
                 </div>
 
-                {{-- Tombol QR --}}
-                <button onclick="window.dispatchEvent(new CustomEvent('open-qr-sheet'))"
-                    class="w-12 h-12 bg-[#2563EB] rounded-2xl flex flex-col items-center justify-center shadow-lg shadow-blue-200 active:scale-90 transition-transform duration-150 flex-shrink-0 gap-0.5">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
-                    </svg>
-                    <span class="text-white text-[9px] font-semibold leading-none">QR</span>
-                </button>
-
             </div>
 
             {{-- Divider --}}
             <div class="mx-4 border-t border-gray-100"></div>
 
-            {{-- Baris Bawah: NoReg & Tanggal Bergabung --}}
-            <div class="flex items-center px-4 py-3 gap-4">
+            {{-- Baris Bawah: NoReg & QR Button --}}
+            <div class="flex items-center justify-between px-4 py-3 bg-[#F8FAFC]">
 
                 {{-- NoReg --}}
-                <div class="flex-1 min-w-0">
-                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide">No.Reg</p>
-                    <p class="text-[#1E3A8A] text-sm font-bold font-mono tracking-wider mt-0.5 truncate">
+                <div class="min-w-0">
+                    <p class="text-gray-400 text-[10px] font-semibold uppercase tracking-wide">Nomor Registrasi</p>
+                    <p class="text-[#1E3A8A] text-sm font-bold font-mono tracking-wider mt-0.5">
                         {{ Auth::user()->nra ?? '-' }}
                     </p>
                 </div>
 
-                {{-- Separator vertikal --}}
-                <div class="w-px h-8 bg-gray-100 flex-shrink-0"></div>
+                {{-- Tombol QR (Subtle Style) --}}
+                <button onclick="window.dispatchEvent(new CustomEvent('open-qr-sheet'))"
+                    class="flex items-center gap-2 bg-white border border-blue-100 px-3 py-1.5 rounded-xl shadow-sm active:scale-95 transition-all duration-150">
+                    <svg class="w-4 h-4 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+                    </svg>
+                    <span class="text-[#1E3A8A] text-[11px] font-bold">Buka QR</span>
+                </button>
 
             </div>
 
@@ -154,8 +148,8 @@
                                                 WIB
                                             </span>
                                         </div>
-                                        <div class="flex items-center justify-between mt-1">
-                                            <div class="flex items-center gap-1">
+                                        <div class="flex items-center justify-between mt-1 gap-2">
+                                            <div class="flex items-center gap-1 min-w-0 flex-1">
                                                 <svg class="w-3 h-3 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
