@@ -148,22 +148,24 @@
                                                 WIB
                                             </span>
                                         </div>
-                                        <div class="flex items-center justify-between mt-1 gap-2">
+                                        <div class="flex items-center mt-1 gap-2">
                                             <div class="flex items-center gap-1 min-w-0 flex-1">
-                                                <svg class="w-3 h-3 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                                                <svg class="w-3.5 h-3.5 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24"
                                                     stroke="currentColor" stroke-width="2">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                 </svg>
-                                                <span
-                                                    class="text-gray-400 text-xs truncate">{{ $activity->location ?? 'Lokasi TBD' }}</span>
+                                                <span class="text-gray-400 text-xs truncate min-w-0">
+                                                    {{ $activity->location ?? 'Lokasi TBD' }}
+                                                </span>
                                             </div>
-                                            <span
-                                                class="bg-[#2563EB] text-white text-[11px] font-semibold px-3 py-1.5 rounded-xl flex-shrink-0">
-                                                Detail →
-                                            </span>
+                                            <div class="flex-shrink-0 ml-auto">
+                                                <span class="bg-[#2563EB] text-white text-[10px] font-bold px-3 py-1.5 rounded-xl whitespace-nowrap">
+                                                    Detail →
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
