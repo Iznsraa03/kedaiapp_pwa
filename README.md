@@ -1,59 +1,104 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🧊 KeDai Computerworks PWA
+[![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
+[![PWA Ready](https://img.shields.io/badge/PWA-Ready-000000?style=for-the-badge&logo=pwa)](https://web.dev/pwa/)
 
+**KeDai Computerworks Management System** adalah aplikasi Progressive Web App (PWA) yang dirancang khusus untuk manajemen kegiatan dan presensi anggota dengan pendekatan *mobile-first native feel*.
+
+---
+
+## ✨ Fitur Unggulan
+
+- **📱 Mobile-First PWA:** Pengalaman aplikasi native langsung dari browser. Mendukung instalasi layar utama (Add to Home Screen) dengan panduan khusus iOS.
+- **🛡️ Secure QR Attendance:** Sistem presensi anti-curang menggunakan hash HMAC-SHA256 yang unik per user, per kegiatan, dan memiliki masa berlaku (TTL) 5 menit.
+- **🎨 Atomic Design System:** Arsitektur frontend yang terstruktur mulai dari *Atoms* hingga *Pages* untuk konsistensi UI maksimal.
+- **📸 Activity Management:** Admin dapat mengelola kegiatan lengkap dengan upload thumbnail, lokasi, dan penjadwalan.
+- **🎭 Dual Interface:** Dashboard modern untuk anggota dan Mode Admin khusus untuk pemindaian presensi di lokasi.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Laravel 12 (PHP 8.2+)
+- **Frontend:** Tailwind CSS 4, Alpine.js, Blade Components
+- **Database:** MySQL / SQLite
+- **Security:** HMAC-SHA256 Tokenization
+- **PWA Tooling:** Vite PWA Plugin
+
+---
+
+## 🚀 Panduan Instalasi
+
+### 1. Kloning Repositori
+```bash
+git clone https://github.com/username/kedaiapp_pwa.git
+cd kedaiapp_pwa
+```
+
+### 2. Instalasi Dependensi
+```bash
+composer install
+npm install
+```
+
+### 3. Konfigurasi Environment
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 4. Database & Storage
+```bash
+php artisan migrate --seed
+php artisan storage:link
+```
+
+### 5. Menjalankan Aplikasi
+```bash
+npm run dev
+# Buka terminal baru
+php artisan serve
+```
+
+---
+
+## 📂 Struktur Proyek (Atomic Design)
+
+Aplikasi ini menggunakan struktur komponen hirarkis di `resources/views/components/`:
+
+- **Atoms:** Komponen terkecil (Button, Badge, Input).
+- **Molecules:** Gabungan atoms (Form Field, Card Header).
+- **Organisms:** Bagian fungsional utuh (Bottom Nav, QR Scanner).
+- **Templates:** Layout kerangka halaman (App Layout Shell).
+- **Pages:** Implementasi data riil dalam halaman (`resources/views/pages/`).
+
+---
+
+## 🔒 Skema Keamanan QR
+
+QR Code yang dihasilkan bersifat dinamis dengan logika:
+1. Menggabungkan `UserID + ActivityID + Timestamp`.
+2. Di-hash menggunakan `HMAC-SHA256` dengan kunci unik aplikasi.
+3. Divalidasi oleh scanner admin untuk memastikan integritas data dan waktu (berlaku 5 menit).
+
+---
+
+## 🎨 Palet Warna & Identitas
+
+| Nama | Hex Code | Penggunaan |
+| :--- | :--- | :--- |
+| **Primary Blue** | `#2563EB` | Tombol Utama, Ikon Aktif, Header |
+| **Navy Blue** | `#1E3A8A` | Teks Utama, Branding, QR Header |
+| **Soft Blue** | `#EFF6FF` | Background Section, Input Field |
+| **White** | `#FFFFFF` | Background Utama |
+
+---
+
+## 📝 Lisensi
+
+Proyek ini dibangun untuk internal **KeDai Computerworks** dan dilisensikan di bawah [MIT License](LICENSE).
+
+---
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  Dibuat dengan ❤️ oleh <b>KeDai Computerworks Team</b>
 </p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

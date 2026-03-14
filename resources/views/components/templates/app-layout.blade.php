@@ -111,23 +111,23 @@
             x-transition:leave="transition ease-in duration-300"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-8"
-            class="fixed bottom-20 left-1/2 -translate-x-1/2 z-[90] w-[calc(100%-2.5rem)] max-w-sm"
+            class="fixed bottom-20 left-1/2 -translate-x-1/2 z-90 w-[calc(100%-2.5rem)] max-w-sm"
         >
             <div class="bg-white border border-blue-100 rounded-3xl shadow-xl shadow-blue-100/50 p-4 flex items-center gap-3">
-                <div class="w-12 h-12 bg-white border border-gray-100 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg p-1">
+                <div class="w-12 h-12 bg-white border border-gray-100 rounded-2xl flex items-center justify-center shrink-0 shadow-lg p-1">
                     <img src="/logo/KDCW.png" alt="KeDai Computerworks" class="w-full h-full object-contain">
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-[#1E3A8A] font-extrabold text-sm flex items-baseline gap-1">
+                    <p class="text-navy font-extrabold text-sm flex items-baseline gap-1">
                         Pasang 
                         <span class="font-rockwell text-sm">KeDai</span>
                         <span class="font-staccato text-base -ml-0.5">Computerworks</span>
                     </p>
                     <p class="text-gray-400 text-xs mt-0.5 leading-snug">Tambah ke layar utama untuk akses lebih cepat!</p>
                 </div>
-                <div class="flex flex-col gap-1.5 flex-shrink-0">
+                <div class="flex flex-col gap-1.5 shrink-0">
                     <button @click="install()"
-                        class="bg-[#2563EB] text-white text-xs font-bold px-4 py-2 rounded-xl active:scale-95 transition-all shadow-md shadow-blue-200">
+                        class="bg-primary text-white text-xs font-bold px-4 py-2 rounded-xl active:scale-95 transition-all shadow-md shadow-blue-200">
                         Pasang
                     </button>
                     <button @click="dismiss()"
@@ -147,7 +147,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100"
             x-transition:leave-end="opacity-0"
-            class="fixed inset-0 z-[200] flex items-end justify-center"
+            class="fixed inset-0 z-200 flex items-end justify-center"
             @click.self="showIosGuide = false"
         >
             {{-- Backdrop --}}
@@ -171,7 +171,7 @@
                 <div class="flex items-center gap-3 mb-5">
                     <img src="/logo/KDCW.png" alt="KeDai Computerworks" class="w-12 h-12 object-contain rounded-2xl bg-white p-1 shadow-md border border-gray-100">
                     <div>
-                        <p class="text-[#1E3A8A] font-extrabold text-base">Pasang ke Homescreen</p>
+                        <p class="text-navy font-extrabold text-base">Pasang ke Homescreen</p>
                         <p class="text-gray-400 text-xs mt-0.5">Ikuti langkah berikut di Safari</p>
                     </div>
                 </div>
@@ -181,15 +181,15 @@
 
                     {{-- Step 1 --}}
                     <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0 text-white font-extrabold text-sm">1</div>
+                        <div class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center shrink-0 text-white font-extrabold text-sm">1</div>
                         <div class="flex-1 pt-1">
-                            <p class="text-[#1E3A8A] font-semibold text-sm">Tap tombol <span class="text-[#2563EB]">Share</span></p>
+                            <p class="text-navy font-semibold text-sm">Tap tombol <span class="text-primary">Share</span></p>
                             <p class="text-gray-400 text-xs mt-0.5">Tombol Share berada di bagian bawah layar Safari</p>
-                            <div class="mt-2 flex items-center gap-2 bg-[#EFF6FF] rounded-xl px-3 py-2">
-                                <svg class="w-5 h-5 text-[#2563EB] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <div class="mt-2 flex items-center gap-2 bg-bg-soft rounded-xl px-3 py-2">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z"/>
                                 </svg>
-                                <span class="text-[#2563EB] text-xs font-semibold">Ikon kotak dengan panah ke atas ↑</span>
+                                <span class="text-primary text-xs font-semibold">Ikon kotak dengan panah ke atas ↑</span>
                             </div>
                         </div>
                     </div>
@@ -198,15 +198,15 @@
 
                     {{-- Step 2 --}}
                     <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0 text-white font-extrabold text-sm">2</div>
+                        <div class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center shrink-0 text-white font-extrabold text-sm">2</div>
                         <div class="flex-1 pt-1">
-                            <p class="text-[#1E3A8A] font-semibold text-sm">Pilih <span class="text-[#2563EB]">"Add to Home Screen"</span></p>
+                            <p class="text-navy font-semibold text-sm">Pilih <span class="text-primary">"Add to Home Screen"</span></p>
                             <p class="text-gray-400 text-xs mt-0.5">Scroll ke bawah pada menu Share hingga menemukan opsi ini</p>
-                            <div class="mt-2 flex items-center gap-2 bg-[#EFF6FF] rounded-xl px-3 py-2">
-                                <svg class="w-5 h-5 text-[#2563EB] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <div class="mt-2 flex items-center gap-2 bg-bg-soft rounded-xl px-3 py-2">
+                                <svg class="w-5 h-5 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
                                 </svg>
-                                <span class="text-[#2563EB] text-xs font-semibold">Add to Home Screen</span>
+                                <span class="text-primary text-xs font-semibold">Add to Home Screen</span>
                             </div>
                         </div>
                     </div>
@@ -215,9 +215,9 @@
 
                     {{-- Step 3 --}}
                     <div class="flex items-start gap-3">
-                        <div class="w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0 text-white font-extrabold text-sm">3</div>
+                        <div class="w-8 h-8 bg-primary rounded-xl flex items-center justify-center shrink-0 text-white font-extrabold text-sm">3</div>
                         <div class="flex-1 pt-1">
-                            <p class="text-[#1E3A8A] font-semibold text-sm">Tap <span class="text-[#2563EB]">"Add"</span> di pojok kanan atas</p>
+                            <p class="text-navy font-semibold text-sm">Tap <span class="text-primary">"Add"</span> di pojok kanan atas</p>
                             <p class="text-gray-400 text-xs mt-0.5 flex items-baseline gap-1">
                                 Icon 
                                 <span class="font-rockwell text-[10px]">KeDai</span>
@@ -231,7 +231,7 @@
 
                 {{-- Close Button --}}
                 <button @click="showIosGuide = false"
-                    class="mt-6 w-full py-3.5 bg-[#EFF6FF] text-[#2563EB] font-bold text-sm rounded-2xl active:scale-[0.97] transition-all">
+                    class="mt-6 w-full py-3.5 bg-bg-soft text-primary font-bold text-sm rounded-2xl active:scale-[0.97] transition-all">
                     Mengerti
                 </button>
 

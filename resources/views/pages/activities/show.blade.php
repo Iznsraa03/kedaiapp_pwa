@@ -1,8 +1,8 @@
 <x-app-layout>
 
     {{-- Header --}}
-    <div class="bg-[#2563EB] px-5 pt-12 pb-16 relative overflow-hidden rounded-b-[2.5rem]">
-        <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-[24px] border-white/10 pointer-events-none"></div>
+    <div class="bg-primary px-5 pt-12 pb-16 relative overflow-hidden rounded-b-[2.5rem]">
+        <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-24 border-white/10 pointer-events-none"></div>
         
         <div class="relative z-10 flex items-center justify-between mb-4">
             <a href="{{ route('home') }}" class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center text-white active:scale-90 transition-all">
@@ -17,7 +17,7 @@
     <div class="px-5 -mt-8 space-y-5 pb-12">
         
         {{-- Thumbnail Card --}}
-        <div class="bg-white p-2 rounded-[2rem] shadow-xl shadow-blue-900/5 relative">
+        <div class="bg-white p-2 rounded-4xl shadow-xl shadow-blue-900/5 relative">
             <div class="relative h-52 w-full overflow-hidden rounded-[1.75rem] bg-gray-50">
                 @if($activity->image)
                     <img src="{{ $activity->image_url }}" alt="{{ $activity->title }}" class="w-full h-full object-cover">
