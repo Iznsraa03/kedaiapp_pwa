@@ -47,11 +47,8 @@
                 <img src="/logo/KDCW.png" alt="KeDai Computerworks" style="width:100%;height:100%;object-fit:contain;">
             </div>
             <div style="text-align:center;">
-                <h1 style="color:white;letter-spacing:0.02em;display:flex;align-items:baseline;justify-content:center;">
-                    <span style="font-family:'RockwellBT', serif; font-weight:bold; font-size:1.875rem;">KeDai</span>
-                    <span style="font-family:'Staccato22BT', cursive; font-size:2.5rem; margin-left:6px;">Computerworks</span>
-                </h1>
-                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:2px;letter-spacing:0.2em;text-transform:uppercase;">Management System</p>
+                <img src="/logo/KD.png" alt="KeDai Computerworks" style="height:40px; width:auto; margin:0 auto;">
+                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:8px;letter-spacing:0.2em;text-transform:uppercase;">Management System</p>
             </div>
         </div>
 

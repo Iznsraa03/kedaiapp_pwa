@@ -35,6 +35,17 @@ class User extends Authenticatable
             : null;
     }
 
+    /** Generate Token QR Unik untuk Presensi Kegiatan */
+    public function generateAttendanceToken(Activity $activity): string
+    {
+        $timestamp = now()->timestamp;
+        $data = "u:{$this->id}|a:{$activity->id}|t:{$timestamp}";
+        $hash = hash_hmac('sha256', $data, config('app.key'));
+        
+        // Format: data|h:hash (Base64 untuk mempermudah transfer)
+        return base64_encode("{$data}|h:{$hash}");
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

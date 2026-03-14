@@ -42,7 +42,17 @@ class ActivityController extends Controller
             'ends_at'     => 'required|date|after:starts_at',
             'status'      => 'required|in:upcoming,open,closed',
             'emoji'       => 'nullable|string|max:10',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // max 2MB
+        ], [
+            'starts_at.required' => 'Waktu mulai wajib diisi.',
+            'ends_at.required'   => 'Waktu selesai wajib diisi.',
+            'ends_at.after'      => 'Waktu selesai harus lebih lambat dari waktu mulai.',
         ]);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('activities', 'public');
+            $data['image'] = $path;
+        }
 
         Activity::create($data);
 
@@ -61,16 +71,27 @@ class ActivityController extends Controller
         return view('pages.admin.activities.show', compact('activity', 'attendees'));
     }
 
-    /** API endpoint async: terima NRA dari QR scanner, catat presensi */
+    /** API endpoint async: terima NRA atau Secure QR dari scanner, catat presensi */
     public function scan(Request $request, Activity $activity)
     {
         $request->validate(['nra' => 'required|string']);
+        $input = $request->nra;
 
-        $result = $this->attendanceService->recordByAdminScan(
-            Auth::user(),
-            $activity,
-            $request->nra
-        );
+        // Cek apakah input adalah Secure QR (Base64 biasanya cukup panjang)
+        // NRA biasanya hanya angka/huruf pendek.
+        if (strlen($input) > 20) {
+            $result = $this->attendanceService->recordBySecureQr(
+                Auth::user(),
+                $activity,
+                $input
+            );
+        } else {
+            $result = $this->attendanceService->recordByAdminScan(
+                Auth::user(),
+                $activity,
+                $input
+            );
+        }
 
         if ($result['success']) {
             $latest = Attendance::with('user')

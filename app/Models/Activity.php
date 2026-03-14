@@ -20,12 +20,24 @@ class Activity extends Model
         'ends_at',
         'status',
         'emoji',
+        'image',
     ];
 
     protected $casts = [
         'starts_at' => 'datetime',
         'ends_at'   => 'datetime',
     ];
+
+    /** Ambil URL gambar thumbnail */
+    public function getImageUrlAttribute(): string
+    {
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+
+        // Default placeholder (menggunakan UI Avatars atau gambar dummy)
+        return "https://ui-avatars.com/api/?name=" . urlencode($this->title) . "&background=2563EB&color=fff";
+    }
 
     protected static function booted(): void
     {

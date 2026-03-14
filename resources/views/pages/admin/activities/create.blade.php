@@ -23,8 +23,37 @@
 
     {{-- Form --}}
     <div class="px-5 py-5">
-        <form method="POST" action="{{ route('admin.activities.store') }}" class="space-y-4">
+        <form method="POST" action="{{ route('admin.activities.store') }}" enctype="multipart/form-data" class="space-y-4">
             @csrf
+
+            {{-- Thumbnail Image --}}
+            <div class="space-y-1.5" x-data="{ preview: null }">
+                <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Thumbnail / Poster</label>
+                <div class="relative group">
+                    <input type="file" name="image" id="image" class="hidden" accept="image/*"
+                        @change="let file = $event.target.files[0]; if(file){ let reader = new FileReader(); reader.onload = (e) => { preview = e.target.result }; reader.readAsDataURL(file); }">
+                    <label for="image" class="flex flex-col items-center justify-center w-full h-40 bg-[#EFF6FF] border-2 border-dashed border-blue-200 rounded-3xl cursor-pointer hover:bg-blue-50 transition-all overflow-hidden relative">
+                        <template x-if="!preview">
+                            <div class="flex flex-col items-center text-center px-4">
+                                <svg class="w-10 h-10 text-[#2563EB] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15m4.5-9l3 3m0 0l3-3m-3 3v12.75"/>
+                                </svg>
+                                <p class="text-[#2563EB] text-xs font-bold">Tap untuk upload gambar</p>
+                                <p class="text-gray-400 text-[10px] mt-1">Format: JPG, PNG, WEBP (Maks. 2MB)</p>
+                            </div>
+                        </template>
+                        <template x-if="preview">
+                            <img :src="preview" class="w-full h-full object-cover">
+                        </template>
+                        <template x-if="preview">
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <p class="text-white text-xs font-bold">Ganti Gambar</p>
+                            </div>
+                        </template>
+                    </label>
+                </div>
+                @error('image') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+            </div>
 
             {{-- Judul --}}
             <div class="space-y-1.5">
@@ -38,7 +67,8 @@
             <div class="space-y-1.5">
                 <label class="block text-[#1E3A8A] text-xs font-bold uppercase tracking-widest">Emoji</label>
                 <div class="flex gap-2 items-center">
-                    <input type="text" name="emoji" value="{{ old('emoji', '📌') }}" maxlength="10" id="emoji-input"
+                    <input type="text" name="emoji" value="{{ old('emoji') }}" maxlength="10" id="emoji-input"
+                        placeholder="📍"
                         class="w-20 px-4 py-3 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-xl text-center focus:outline-none focus:border-[#2563EB] transition-all duration-200">
                     <div class="flex gap-2 flex-wrap">
                         @foreach(['🎉','☕','🏆','📚','🎨','🎤','🏋️','🌿','💼','🎯'] as $em)
