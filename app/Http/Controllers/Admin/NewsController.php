@@ -43,7 +43,7 @@ class NewsController extends Controller
         $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug',
             'short_description' => 'nullable|string',
-            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image upload
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // Restricted mime types
             'published_at'      => 'nullable|date',
         ];
 
@@ -99,7 +99,7 @@ class NewsController extends Controller
         $rules = [
             'slug'              => 'required|string|max:255|unique:news,slug,' . $news->id,
             'short_description' => 'nullable|string',
-            'image'             => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validation for image upload
+            'image'             => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', // Restricted mime types
             'published_at'      => 'nullable|date',
         ];
 

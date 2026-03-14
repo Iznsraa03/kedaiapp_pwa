@@ -35,7 +35,7 @@
                             title: '{{ old('title', $news->title) }}',
                             slug: '{{ old('slug', $news->slug) }}',
                             short_description: '{{ old('short_description', $news->short_description) }}',
-                            content: `{!! addslashes(old('content', $news->content)) !!}`,
+                            content: @js(old('content', $news->content)),
                             published_at: '{{ old('published_at', $news->published_at ? $news->published_at->format('Y-m-d\TH:i') : '') }}',
                         },
                         image_preview: '{{ $news->image_url ? $news->image_url : '' }}',
@@ -184,7 +184,7 @@
                                     </div>
                                 </div>
 
-                                <div class="mt-8 prose prose-sm text-gray-700 leading-relaxed font-medium" x-html="form.content.replace(/\n/g, '<br>') || 'Isi berita akan muncul di sini...'"></div>
+                                <div class="mt-8 prose prose-sm text-gray-700 leading-relaxed font-medium whitespace-pre-wrap text-wrap break-words" x-text="form.content || 'Isi berita akan muncul di sini...'"></div>
                             </div>
                         </div>
                     </div>

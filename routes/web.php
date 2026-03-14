@@ -15,7 +15,7 @@ Route::get('/', function () {
 // Auth Routes (Guest Only)
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.post')->middleware('throttle:5,1');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 });
@@ -26,7 +26,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 // Dashboard Pages (Auth Required)
 Route::middleware('auth')->group(function () {
     Route::get('/home', function () {
-        $activities = \App\Models\Activity::orderBy('starts_at')->get();
+        $activities = \App\Models\Activity::orderBy('starts_at')->paginate(10);
         $latestNews = News::orderBy('published_at', 'desc')->take(3)->get();
         return view('pages.home', compact('activities', 'latestNews'));
     })->name('home');
@@ -36,12 +36,12 @@ Route::middleware('auth')->group(function () {
         $activities = \App\Models\Activity::withCount('attendances')
             ->when($status !== 'semua', fn ($q) => $q->where('status', $status))
             ->orderBy('starts_at')
-            ->get();
+            ->paginate(15);
         return view('pages.pesanan', compact('activities'));
     })->name('pesanan');
 
     Route::get('/direktori', function () {
-        $members = \App\Models\User::where('role', 'member')->orderBy('name')->get();
+        $members = \App\Models\User::where('role', 'member')->orderBy('name')->paginate(20);
         return view('pages.direktori', compact('members'));
     })->name('direktori');
 
@@ -67,7 +67,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/kegiatan/{activity}',         [AdminActivityController::class, 'show'])->name('activities.show');
         Route::get('/kegiatan/{activity}/display',[AdminActivityController::class, 'display'])->name('activities.display');
         Route::get('/kegiatan/{activity}/stream', [AdminActivityController::class, 'stream'])->name('activities.stream');
-        Route::post('/kegiatan/{activity}/scan',  [AdminActivityController::class, 'scan'])->name('activities.scan');
+        Route::post('/kegiatan/{activity}/scan',  [AdminActivityController::class, 'scan'])->name('activities.scan')->middleware('throttle:30,1');
 
         Route::get('/kegiatan/{activity}/edit',    [AdminActivityController::class, 'edit'])->name('activities.edit');
         Route::put('/kegiatan/{activity}',        [AdminActivityController::class, 'update'])->name('activities.update');
@@ -75,6 +75,6 @@ Route::middleware('auth')->group(function () {
 
         // News Management
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
-        Route::post('/news/fetch-data', [\App\Http\Controllers\Admin\NewsController::class, 'fetchNewsData'])->name('news.fetch-data');
+        Route::post('/news/fetch-data', [\App\Http\Controllers\Admin\NewsController::class, 'fetchNewsData'])->name('news.fetch-data')->middleware('throttle:10,1');
     });
 });

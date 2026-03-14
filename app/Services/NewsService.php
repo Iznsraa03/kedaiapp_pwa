@@ -20,7 +20,17 @@ class NewsService
     public function fetchNewsContent(string $url): ?array
     {
         try {
-            $response = $this->httpClient->get($url);
+            // SSRF Protection: Validate IP
+            $host = parse_url($url, PHP_URL_HOST);
+            if (!$host) return null;
+
+            $ip = gethostbyname($host);
+            if ($this->isPrivateIp($ip)) {
+                \Log::warning("SSRF attempt blocked for URL: {$url} (IP: {$ip})");
+                return null;
+            }
+
+            $response = $this->httpClient->get($url, ['timeout' => 5]);
             $html = $response->getBody()->getContents();
 
             $dom = new DOMDocument();
@@ -34,7 +44,7 @@ class NewsService
             $title = $this->extractTitle($xpath);
             $description = $this->extractDescription($xpath);
             $image = $this->extractImage($xpath, $url);
-            $content = $this->extractContent($xpath);
+            $content = $this->extractContent($xpath, $dom);
 
             if ($title && $content) {
                 return [
@@ -109,7 +119,7 @@ class NewsService
         return null;
     }
 
-    protected function extractContent(DOMXPath $xpath): ?string
+    protected function extractContent(DOMXPath $xpath, DOMDocument $dom): ?string
     {
         // A more robust content extraction would involve identifying common article containers.
         // This is a basic attempt to get text content from common elements.
@@ -144,5 +154,10 @@ class NewsService
 
         // Handle relative URLs
         return rtrim($baseUrl, '/') . '/' . ltrim($url, '/');
+    }
+
+    protected function isPrivateIp(string $ip): bool
+    {
+        return !filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
     }
 }

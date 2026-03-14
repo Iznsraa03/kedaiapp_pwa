@@ -115,7 +115,7 @@ class ActivityController extends Controller
         $attendees = Attendance::with('user')
             ->where('activity_id', $activity->id)
             ->latest('scanned_at')
-            ->get();
+            ->paginate(50);
 
         return view('pages.admin.activities.show', compact('activity', 'attendees'));
     }
@@ -128,18 +128,29 @@ class ActivityController extends Controller
 
         // Cek apakah input adalah Secure QR (Base64 biasanya cukup panjang)
         // NRA biasanya hanya angka/huruf pendek.
-        if (strlen($input) > 20) {
-            $result = $this->attendanceService->recordBySecureQr(
-                Auth::user(),
-                $activity,
-                $input
-            );
-        } else {
-            $result = $this->attendanceService->recordByAdminScan(
-                Auth::user(),
-                $activity,
-                $input
-            );
+        try {
+            if (strlen($input) > 20) {
+                $result = $this->attendanceService->recordBySecureQr(
+                    Auth::user(),
+                    $activity,
+                    $input
+                );
+            } else {
+                $result = $this->attendanceService->recordByAdminScan(
+                    Auth::user(),
+                    $activity,
+                    $input
+                );
+            }
+        } catch (\Illuminate\Database\QueryException $e) {
+        
+            if ($e->getCode() == 23000 || str_contains($e->getMessage(), 'UNIQUE')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Anda sudah terdaftar sebagai hadir (Double Scan).'
+                ]);
+            }
+            throw $e;
         }
 
         if ($result['success']) {

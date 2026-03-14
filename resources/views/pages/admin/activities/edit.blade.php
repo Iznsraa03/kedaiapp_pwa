@@ -8,7 +8,7 @@
                 starts_at: '{{ old('starts_at', $activity->starts_at->format('Y-m-d\TH:i')) }}',
                 ends_at: '{{ old('ends_at', $activity->ends_at->format('Y-m-d\TH:i')) }}',
                 status: '{{ old('status', $activity->status) }}',
-                description: `{!! addslashes(old('description', $activity->description)) !!}`
+                description: @js(old('description', $activity->description))
             },
             showPreview: false,
             image_preview: '{{ $activity->image_url ? $activity->image_url : '' }}',
@@ -227,7 +227,7 @@
                                 <div class="h-px bg-gray-200"></div>
                                 <div class="flex flex-col gap-2">
                                     <span class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Keterangan</span>
-                                    <div class="text-[#1E3A8A] text-sm leading-relaxed" x-html="form.description.replace(/\n/g, '<br>') || 'Tidak ada deskripsi tambahan.'"></div>
+                                    <div class="text-[#1E3A8A] text-sm leading-relaxed whitespace-pre-wrap text-wrap break-words" x-text="form.description || 'Tidak ada deskripsi tambahan.'"></div>
                                 </div>
                             </div>
 
