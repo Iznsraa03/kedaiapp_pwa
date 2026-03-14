@@ -103,10 +103,10 @@
                     <p class="text-gray-400 text-xs">Pantau terus untuk update kegiatan terbaru.</p>
                 </div>
             @else
-                <div class="space-y-4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                     @foreach($activities as $activity)
                         <a href="{{ route('activities.show', $activity) }}"
-                            class="block bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm active:scale-[0.98] transition-all duration-200">
+                            class="block bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm active:scale-[0.98] lg:hover:shadow-md lg:hover:scale-[1.01] transition-all duration-200">
                             
                             {{-- Thumbnail Section --}}
                             <div class="relative h-44 w-full bg-blue-50">

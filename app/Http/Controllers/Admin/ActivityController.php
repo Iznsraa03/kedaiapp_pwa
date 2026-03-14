@@ -60,6 +60,55 @@ class ActivityController extends Controller
             ->with('success', 'Kegiatan berhasil ditambahkan!');
     }
 
+    /** Form edit kegiatan */
+    public function edit(Activity $activity)
+    {
+        return view('pages.admin.activities.edit', compact('activity'));
+    }
+
+    /** Update data kegiatan */
+    public function update(Request $request, Activity $activity)
+    {
+        $data = $request->validate([
+            'title'       => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'location'    => 'nullable|string|max:255',
+            'starts_at'   => 'required|date',
+            'ends_at'     => 'required|date|after:starts_at',
+            'status'      => 'required|in:upcoming,open,closed',
+            'emoji'       => 'nullable|string|max:10',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($activity->image && \Storage::disk('public')->exists($activity->image)) {
+                \Storage::disk('public')->delete($activity->image);
+            }
+            $path = $request->file('image')->store('activities', 'public');
+            $data['image'] = $path;
+        }
+
+        $activity->update($data);
+
+        return redirect()->route('admin.activities.index')
+            ->with('success', 'Kegiatan berhasil diperbarui!');
+    }
+
+    /** Hapus kegiatan */
+    public function destroy(Activity $activity)
+    {
+        // Hapus gambar jika ada
+        if ($activity->image && \Storage::disk('public')->exists($activity->image)) {
+            \Storage::disk('public')->delete($activity->image);
+        }
+
+        $activity->delete();
+
+        return redirect()->route('admin.activities.index')
+            ->with('success', 'Kegiatan berhasil dihapus!');
+    }
+
     /** Halaman detail kegiatan untuk admin + scanner */
     public function show(Activity $activity)
     {

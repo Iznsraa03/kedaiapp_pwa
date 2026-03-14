@@ -15,14 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::firstOrCreate(
-            ['email' => 'admin@kedaiapp.com'],
-            [
-                'name' => 'Admin KedaiApp',
-                'nra' => 'KDA-001',
-                'role' => 'admin',
-                'password' => bcrypt('admin@kedai2026')
-            ]
-        );
+        $admin = User::factory()->dummyAdmin()->raw();
+        User::firstOrCreate(['email' => $admin['email']], $admin);
+
+        $user = User::factory()->dummyUser()->raw();
+        User::firstOrCreate(['email' => $user['email']], $user);
     }
 }

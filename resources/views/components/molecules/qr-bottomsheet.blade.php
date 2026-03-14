@@ -34,7 +34,7 @@
         x-transition:leave="transition ease-in duration-200"
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 translate-y-full"
-        class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white rounded-t-3xl shadow-2xl px-5 pt-4 pb-10 z-50"
+        class="fixed bottom-0 lg:bottom-auto lg:top-1/2 left-1/2 -translate-x-1/2 lg:-translate-y-1/2 w-full max-w-md bg-white rounded-t-3xl lg:rounded-3xl shadow-2xl px-5 pt-4 pb-10 lg:pb-8 z-50"
         style="display: none;"
     >
         {{-- Drag Handle --}}

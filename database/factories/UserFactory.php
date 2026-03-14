@@ -46,4 +46,60 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
+
+    /**
+     * Set role as admin.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+        ]);
+    }
+
+    /**
+     * Set role as member (regular user).
+     */
+    public function member(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'member',
+        ]);
+    }
+
+    /**
+     * Alias for member state to keep usage intuitive.
+     */
+    public function user(): static
+    {
+        return $this->member();
+    }
+
+    /**
+     * Fixed dummy admin account.
+     */
+    public function dummyAdmin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name'     => 'Admin KedaiApp',
+            'email'    => 'admin@kedaiapp.com',
+            'nra'      => 'KDA-001',
+            'role'     => 'admin',
+            'password' => Hash::make('admin@kedai2026'),
+        ]);
+    }
+
+    /**
+     * Fixed dummy regular account.
+     */
+    public function dummyUser(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'name'     => 'Dummy User',
+            'email'    => 'user@kedaiapp.com',
+            'nra'      => 'KDA-002',
+            'role'     => 'member',
+            'password' => Hash::make('user@kedai2026'),
+        ]);
+    }
 }

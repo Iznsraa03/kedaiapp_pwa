@@ -73,9 +73,9 @@
         .field-input .eye-btn:active { transform: scale(.9); }
     </style>
 </head>
-<body class="bg-[#EFF6FF] font-sans antialiased">
+<body class="bg-[#EFF6FF] font-sans antialiased min-h-screen flex items-center justify-center p-4 lg:p-8">
 
-<div class="max-w-md mx-auto min-h-screen bg-white flex flex-col">
+<div class="w-full max-w-md bg-white flex flex-col rounded-[2.5rem] overflow-hidden shadow-2xl lg:shadow-3xl lg:border lg:border-blue-100">
 
     {{-- HERO --}}
     <div class="s1 bg-[#2563EB] px-6 pt-16 pb-10 relative overflow-hidden rounded-b-[2.5rem]">

@@ -7,7 +7,7 @@
 <div
     x-data="toastManager()"
     x-on:toast.window="show($event.detail)"
-    class="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[calc(100%-2rem)] max-w-sm pointer-events-none"
+    class="fixed top-4 left-1/2 -translate-x-1/2 lg:left-auto lg:right-8 lg:translate-x-0 z-[100] w-[calc(100%-2rem)] max-w-sm pointer-events-none"
     aria-live="polite"
 >
     <template x-for="(toast, index) in toasts" :key="toast.id">

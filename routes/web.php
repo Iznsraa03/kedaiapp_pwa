@@ -69,6 +69,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/kegiatan/{activity}/stream', [AdminActivityController::class, 'stream'])->name('activities.stream');
         Route::post('/kegiatan/{activity}/scan',  [AdminActivityController::class, 'scan'])->name('activities.scan');
 
+        Route::get('/kegiatan/{activity}/edit',    [AdminActivityController::class, 'edit'])->name('activities.edit');
+        Route::put('/kegiatan/{activity}',        [AdminActivityController::class, 'update'])->name('activities.update');
+        Route::delete('/kegiatan/{activity}',     [AdminActivityController::class, 'destroy'])->name('activities.destroy');
+
         // News Management
         Route::resource('news', \App\Http\Controllers\Admin\NewsController::class);
         Route::post('/news/fetch-data', [\App\Http\Controllers\Admin\NewsController::class, 'fetchNewsData'])->name('news.fetch-data');
