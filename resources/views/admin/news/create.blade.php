@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="min-h-screen bg-gray-50 flex flex-col">
         {{-- HEADER --}}
-        <div class="bg-[#2563EB] px-5 lg:px-8 pt-8 lg:pt-10 pb-4 lg:pb-6 relative overflow-hidden rounded-b-[2rem] lg:rounded-none">
+        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
             <div class="max-w-7xl mx-auto w-full relative z-10">
                 <a href="{{ route('admin.news.index') }}" class="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-semibold mb-3 lg:mb-5 active:opacity-60 transition-all">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -9,8 +9,8 @@
                     </svg>
                     Kembali
                 </a>
-                <h1 class="text-white text-2xl lg:text-3xl font-extrabold tracking-tight">Add News</h1>
-                <p class="text-blue-200 text-sm mt-0.5">Tambah berita baru untuk aplikasi</p>
+                <h1 class="text-white text-2xl lg:text-3xl font-extrabold tracking-tight">Tambah Berita</h1>
+                <p class="text-blue-200 text-sm mt-0.5 font-bold">Sebarkan informasi terbaru kepada komunitas</p>
             </div>
         </div>
 
@@ -34,12 +34,12 @@
 
                 <form method="POST" action="{{ route('admin.news.store') }}" enctype="multipart/form-data" x-data="{
                         form: {
-                            source_url: '{{ old('source_url') }}',
-                            title: '{{ old('title') }}',
-                            slug: '{{ old('slug') }}',
-                            short_description: '{{ old('short_description') }}',
-                            content: '{{ old('content') }}',
-                            published_at: '{{ old('published_at') ? \Carbon\Carbon::parse(old('published_at'))->format('Y-m-d\TH:i') : \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}',
+                            source_url: @js(old('source_url', '')),
+                            title: @js(old('title', '')),
+                            slug: @js(old('slug', '')),
+                            short_description: @js(old('short_description', '')),
+                            content: @js(old('content', '')),
+                            published_at: @js(old('published_at') ? \Carbon\Carbon::parse(old('published_at'))->format('Y-m-d\TH:i') : \Carbon\Carbon::now()->format('Y-m-d\TH:i')),
                         },
                         manualEntry: {{ old('source_url') && !($errors->has('title') || $errors->has('content') || $errors->has('image')) ? 'false' : 'true' }},
                         image_preview: null,
@@ -90,7 +90,7 @@
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']').content
                                     },
                                     body: JSON.stringify({ url: this.form.source_url })
                                 });
@@ -127,66 +127,65 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                         {{-- LEFT COLUMN: MAIN CONTENT --}}
                         <div class="lg:col-span-2 space-y-6">
-                            <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 lg:p-10">
+                            <div class="bg-white hd-card border-none p-6 lg:p-10">
                                 <!-- Mode Toggle -->
-                                <div class="mb-8 flex justify-center space-x-2 p-1.5 bg-gray-100 rounded-2xl w-full max-w-sm mx-auto">
-                                    <button type="button" @click="manualEntry = false" :class="{ 'bg-[#2563EB] text-white shadow-md': !manualEntry, 'text-gray-600': manualEntry }" class="flex-1 px-4 py-2.5 rounded-xl font-bold text-xs transition-all duration-200">
-                                        AUTO FETCH
+                                <div class="mb-8 flex justify-center space-x-2 p-1.5 bg-gray-50 hd-wobbly-md w-full max-w-sm mx-auto border-hd-ink/10">
+                                    <button type="button" @click="manualEntry = false" :class="{ 'bg-[#1E3A8A] text-white hd-shadow-sm': !manualEntry, 'text-gray-400': manualEntry }" class="flex-1 px-4 py-2.5 rounded-xl font-bold text-xs transition-all duration-200">
+                                        OTOMATIS
                                     </button>
-                                    <button type="button" @click="manualEntry = true" :class="{ 'bg-[#2563EB] text-white shadow-md': manualEntry, 'text-gray-600': !manualEntry }" class="flex-1 px-4 py-2.5 rounded-xl font-bold text-xs transition-all duration-200">
+                                    <button type="button" @click="manualEntry = true" :class="{ 'bg-[#1E3A8A] text-white hd-shadow-sm': manualEntry, 'text-gray-400': !manualEntry }" class="flex-1 px-4 py-2.5 rounded-xl font-bold text-xs transition-all duration-200">
                                         MANUAL
                                     </button>
                                 </div>
 
                                 <!-- Source URL -->
-                                <div class="mb-6 space-y-2" x-show="!manualEntry" x-transition>
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Source URL</label>
-                                    <div class="flex items-center gap-2">
-                                        <div class="flex-1 flex items-center bg-[#EFF6FF] rounded-2xl px-4 py-1.5 border-2 border-transparent focus-within:border-[#2563EB] transition-all">
-                                            <svg class="w-5 h-5 text-[#2563EB] mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                                <div class="mb-10 space-y-2" x-show="!manualEntry" x-transition>
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">URL Sumber Berita</label>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-1 flex items-center bg-[#EFF6FF] hd-wobbly-md px-4 py-1.5 border-hd-ink/10">
+                                            <svg class="w-5 h-5 text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.364 0a4.5 4.5 0 01-1.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.364 0l1.757-1.757m-1.757 1.757L13.19 8.688" />
                                             </svg>
-                                            <input type="url" name="source_url" id="source_url_input" x-model="form.source_url" placeholder="https://example.com/news-article" class="flex-1 bg-transparent border-none outline-none text-[#1E3A8A] text-sm font-medium py-2.5" :disabled="manualEntry">
+                                            <input type="url" name="source_url" id="source_url_input" x-model="form.source_url" placeholder="https://news.detik.com/..." class="flex-1 bg-transparent border-none outline-none text-[#1E3A8A] text-sm font-bold py-2.5" :disabled="manualEntry">
                                         </div>
-                                        <button type="button" @click="fetchNews" :disabled="loading || !form.source_url || manualEntry" 
-                                            class="bg-[#2563EB] text-white font-bold text-xs px-6 py-4 rounded-2xl shadow-lg shadow-blue-100 active:scale-95 transition-all disabled:opacity-50 disabled:scale-100">
+                                        <x-atoms.button type="button" @click="fetchNews" variant="primary" size="lg" :handdrawn="true" ::disabled="loading || !form.source_url || manualEntry">
                                             <span x-show="!loading">Fetch</span>
-                                            <span x-show="loading" class="flex items-center gap-2">
-                                                <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <div x-show="loading" class="flex items-center gap-2">
+                                                <svg class="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
                                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                                 </svg>
-                                            </span>
-                                        </button>
+                                            </div>
+                                        </x-atoms.button>
                                     </div>
-                                    @error('source_url') <p class="text-sm text-red-600 font-medium">{{ $message }}</p> @enderror
+                                    @error('source_url') <p class="text-sm text-red-600 font-bold mt-1">{{ $message }}</p> @enderror
                                 </div>
 
                                 <div class="space-y-6">
                                     <!-- Title -->
                                     <div class="space-y-2">
-                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Title</label>
-                                        <input type="text" name="title" id="title_input" x-model="form.title" placeholder="Enter impressive title..." 
-                                            class="w-full px-5 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-lg font-bold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all" :required="manualEntry">
-                                        @error('title') <p class="text-sm text-red-600 font-medium">{{ $message }}</p> @enderror
+                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest text-shadow-sm">Judul Berita</label>
+                                        <input type="text" name="title" id="title_input" x-model="form.title" placeholder="Tulis judul yang menarik..." 
+                                            class="w-full px-5 py-4 bg-[#EFF6FF] hd-wobbly-md border-hd-ink/10 text-[#1E3A8A] text-lg font-bold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#1E3A8A] transition-all" :required="manualEntry">
+                                        @error('title') <p class="text-sm text-red-600 font-bold">{{ $message }}</p> @enderror
                                     </div>
 
                                     <!-- Short Description -->
                                     <div class="space-y-2">
-                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Short Description</label>
-                                        <textarea name="short_description" id="short_description_input" x-model="form.short_description" rows="3" placeholder="Brief summary for list view..."
-                                            class="w-full px-5 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-sm font-medium focus:outline-none focus:border-[#2563EB] transition-all resize-none"></textarea>
-                                        @error('short_description') <p class="text-sm text-red-600 font-medium">{{ $message }}</p> @enderror
+                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Deskripsi Singkat</label>
+                                        <textarea name="short_description" id="short_description_input" x-model="form.short_description" rows="3" placeholder="Ringkasan singkat untuk tampilan list..."
+                                            class="w-full px-5 py-4 bg-[#EFF6FF] hd-wobbly-md border-hd-ink/10 text-[#1E3A8A] text-sm font-bold focus:outline-none focus:border-[#1E3A8A] transition-all resize-none"></textarea>
+                                        @error('short_description') <p class="text-sm text-red-600 font-bold">{{ $message }}</p> @enderror
                                     </div>
 
                                     <!-- Content -->
                                     <div class="space-y-2">
-                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Full Content</label>
-                                        <div class="bg-[#EFF6FF] rounded-3xl overflow-hidden border-2 border-transparent focus-within:border-[#2563EB] transition-all">
-                                            <textarea name="content" id="content_input" x-model="form.content" rows="15" placeholder="Tell the story here..." 
-                                                class="w-full px-6 py-6 bg-transparent border-none outline-none text-[#1E3A8A] text-base font-medium leading-relaxed resize-none" :required="manualEntry"></textarea>
+                                        <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Isi Berita Lengkap</label>
+                                        <div class="bg-white hd-wobbly-lg border-hd-ink/10 overflow-hidden focus-within:border-[#1E3A8A] transition-all">
+                                            <textarea name="content" id="content_input" x-model="form.content" rows="15" placeholder="Tuliskan berita lengkap di sini..." 
+                                                class="w-full px-6 py-6 bg-transparent border-none outline-none text-[#1E3A8A] text-base font-bold leading-relaxed resize-none" :required="manualEntry"></textarea>
                                         </div>
-                                        @error('content') <p class="text-sm text-red-600 font-medium">{{ $message }}</p> @enderror
+                                        @error('content') <p class="text-sm text-red-600 font-bold">{{ $message }}</p> @enderror
                                     </div>
                                 </div>
                             </div>
@@ -196,54 +195,54 @@
                         <div class="space-y-6 lg:sticky lg:top-8">
                             
                             {{-- Image Upload Card --}}
-                            <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 overflow-hidden">
-                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest mb-4">Feature Image</label>
+                            <div class="bg-white hd-card border-none p-6">
+                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest mb-4">Thumbnail Berita</label>
                                 <div class="relative group">
                                     <input type="file" name="image" id="image_input" accept="image/*" class="hidden" @change="handleImageUpload">
-                                    <label for="image_input" class="block w-full h-48 lg:h-56 bg-[#EFF6FF] border-2 border-dashed border-blue-200 rounded-2xl cursor-pointer hover:bg-blue-50 transition-all overflow-hidden relative">
+                                    <label for="image_input" class="block w-full h-48 lg:h-56 bg-gray-50 hd-wobbly-md border-hd-ink/10 cursor-pointer hover:bg-blue-50 transition-all overflow-hidden relative border-dashed border-2">
                                         <template x-if="!image_preview">
                                             <div class="flex flex-col items-center justify-center h-full text-center px-4">
-                                                <svg class="w-10 h-10 text-[#2563EB] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                                <svg class="w-10 h-10 text-gray-300 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15m4.5-9l3 3m0 0l3-3m-3 3v12.75"/>
                                                 </svg>
-                                                <p class="text-[#2563EB] text-[11px] font-bold">Tap to Upload</p>
+                                                <p class="text-gray-400 text-[10px] font-bold">Tap untuk Pilih Gambar</p>
                                             </div>
                                         </template>
                                         <template x-if="image_preview">
                                             <div class="w-full h-full relative">
                                                 <img :src="image_preview" class="w-full h-full object-cover">
                                                 <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <span class="text-white text-xs font-bold">Change Image</span>
+                                                    <span class="text-white text-xs font-bold">Ganti Gambar</span>
                                                 </div>
                                             </div>
                                         </template>
                                     </label>
                                 </div>
-                                @error('image') <p class="text-sm text-red-600 font-medium mt-2">{{ $message }}</p> @enderror
+                                @error('image') <p class="text-sm text-red-600 font-bold mt-2">{{ $message }}</p> @enderror
                             </div>
 
                             {{-- Publishing Card --}}
-                            <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 space-y-5">
+                            <div class="bg-white hd-card border-none p-6 space-y-5">
                                 <div class="space-y-2">
                                     <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Slug (URL)</label>
-                                    <input type="text" name="slug" id="slug_input" x-model="form.slug" placeholder="news-slug..." 
-                                        class="w-full px-4 py-3 bg-[#EFF6FF] rounded-xl text-[#1E3A8A] text-xs font-mono outline-none border-2 border-transparent focus:border-[#2563EB]" :required="manualEntry">
-                                    @error('slug') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                                    <input type="text" name="slug" id="slug_input" x-model="form.slug" placeholder="slug-berita..." 
+                                        class="w-full px-4 py-3 bg-[#EFF6FF] hd-wobbly-md border-hd-ink/10 text-[#1E3A8A] text-xs font-bold outline-none focus:border-[#1E3A8A]" :required="manualEntry">
+                                    @error('slug') <p class="text-xs text-red-600 font-bold mt-1">{{ $message }}</p> @enderror
                                 </div>
 
                                 <div class="space-y-2">
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Publish Date</label>
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Waktu Publish</label>
                                     <input type="datetime-local" name="published_at" id="published_at_input" x-model="form.published_at" 
-                                        class="w-full px-4 py-3 bg-[#EFF6FF] rounded-xl text-[#1E3A8A] text-xs font-bold outline-none border-2 border-transparent focus:border-[#2563EB]">
-                                    @error('published_at') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                                        class="w-full px-4 py-3 bg-[#EFF6FF] hd-wobbly-md border-hd-ink/10 text-[#1E3A8A] text-xs font-bold outline-none focus:border-[#1E3A8A]">
+                                    @error('published_at') <p class="text-xs text-red-600 font-bold mt-1">{{ $message }}</p> @enderror
                                 </div>
 
                                 <div class="pt-4 space-y-3">
-                                    <button type="submit" @click="localStorage.removeItem('news_draft')" class="w-full bg-[#2563EB] text-white font-extrabold py-4 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-600 active:scale-95 transition-all text-sm uppercase tracking-wide">
-                                        Publish News
-                                    </button>
+                                    <x-atoms.button type="submit" @click="localStorage.removeItem('news_draft')" variant="primary" size="lg" :handdrawn="true" class="w-full uppercase tracking-widest text-xs">
+                                        Publikasikan
+                                    </x-atoms.button>
                                     <button type="button" @click="clearDraft" class="w-full bg-gray-50 text-gray-400 font-bold py-3 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all text-[10px] uppercase tracking-widest">
-                                        Clear Draft
+                                        Hapus Draft
                                     </button>
                                 </div>
                             </div>
@@ -294,15 +293,14 @@
                     </div>
 
                     {{-- FLOATING PREVIEW BUTTON --}}
-                    <button type="button" @click="showPreview = true" class="fixed bottom-8 right-8 z-[90] bg-[#1E3A8A] text-white p-4 rounded-2xl shadow-2xl hover:scale-110 active:scale-90 transition-all group overflow-hidden">
+                    <x-atoms.button type="button" @click="showPreview = true" variant="primary" size="lg" :handdrawn="true" class="fixed bottom-8 right-8 z-[90] shadow-2xl group overflow-hidden">
                         <div class="flex items-center gap-2">
                             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
                             </svg>
-                            <span class="text-sm font-bold pr-2">Preview</span>
+                            <span class="text-sm font-bold pr-2 whitespace-nowrap">Preview</span>
                         </div>
-                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </button>
+                    </x-atoms.button>
                         
                                 </div>
                             </div>

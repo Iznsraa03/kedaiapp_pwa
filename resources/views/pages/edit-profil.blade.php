@@ -6,10 +6,10 @@
     @endpush
 
     {{-- Header --}}
-    <div class="bg-primary px-5 pt-12 pb-6 rounded-b-3xl">
+    <div class="px-5 pt-12 pb-6 bg-[#1E3A8A] hd-wobbly-lg mt-2 mx-2">
         <div class="flex items-center gap-3">
             <a href="{{ route('profil') }}"
-               class="w-9 h-9 bg-white/20 rounded-2xl flex items-center justify-center active:scale-90 transition-transform duration-150">
+               class="w-9 h-9 bg-white/20 hd-wobbly-md flex items-center justify-center active:scale-90 transition-transform duration-150 border border-transparent">
                 <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                 </svg>
@@ -43,7 +43,7 @@
             {{-- Foto Profil --}}
             <div class="flex flex-col items-center gap-3 py-2">
                 <div class="relative">
-                    <div class="w-24 h-24 rounded-3xl bg-blue-50 border-2 border-dashed border-blue-200 flex items-center justify-center overflow-hidden" id="avatar-preview-wrapper">
+                    <div class="w-24 h-24 bg-blue-50 hd-wobbly-md flex items-center justify-center overflow-hidden border border-hd-ink/10" id="avatar-preview-wrapper">
                         @if($user->avatar)
                             <img id="avatar-preview" src="{{ asset('storage/' . $user->avatar) }}" class="w-full h-full object-cover">
                         @else
@@ -57,7 +57,7 @@
                         @endif
                     </div>
                     <label for="avatar-input"
-                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#2563EB] rounded-xl flex items-center justify-center cursor-pointer shadow-md active:scale-90 transition-transform">
+                        class="absolute -bottom-2 -right-2 w-8 h-8 bg-[#2563EB] hd-wobbly-md flex items-center justify-center cursor-pointer shadow-md active:scale-90 transition-transform border border-hd-ink/10">
                         <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z"/>
                             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z"/>
@@ -72,14 +72,14 @@
             </div>
 
             {{-- Nama --}}
-            <div class="bg-white border border-gray-100 rounded-2xl px-4 py-3 shadow-sm">
+            <div class="bg-white hd-card px-4 py-3 border-none">
                 <label class="text-[#1E3A8A] text-xs font-bold uppercase tracking-wide mb-1.5 block">Nama Lengkap</label>
                 <input
                     type="text"
                     name="name"
                     value="{{ old('name', $user->name) }}"
                     placeholder="Masukkan nama lengkap"
-                    class="w-full text-sm text-gray-700 font-medium placeholder-gray-300 border-0 outline-none focus:ring-0 p-0 bg-transparent"
+                    class="w-full text-sm text-gray-700 font-bold placeholder-gray-300 border-0 outline-none focus:ring-0 p-0 bg-transparent"
                     required
                 >
                 @error('name')
@@ -141,12 +141,15 @@
             </div>
 
             {{-- Submit --}}
-            <button
+            <x-atoms.button
                 type="submit"
-                class="w-full bg-[#2563EB] text-white font-bold text-sm py-4 rounded-2xl shadow-lg shadow-blue-200 active:scale-[0.98] transition-transform duration-150 mt-2"
+                variant="primary"
+                size="lg"
+                :handdrawn="true"
+                class="w-full mt-2"
             >
                 Simpan Perubahan
-            </button>
+            </x-atoms.button>
 
         </form>
 

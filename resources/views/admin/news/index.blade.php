@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="min-h-screen bg-gray-50 flex flex-col">
         {{-- HEADER --}}
-        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden rounded-b-[2rem] lg:rounded-none">
+        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
             <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-[24px] border-white/10 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto w-full relative z-10">
@@ -11,17 +11,16 @@
                             <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
                             <span class="text-white text-xs font-bold tracking-wide">MODE ADMIN</span>
                         </div>
-                        <h1 class="text-white text-2xl lg:text-4xl font-extrabold tracking-tight">News Management</h1>
-                        <p class="text-blue-200 text-sm mt-1">Kelola berita aplikasi anda</p>
+                        <h1 class="text-white text-2xl lg:text-4xl font-extrabold tracking-tight">Manajemen Berita</h1>
+                        <p class="text-blue-200 text-sm mt-1 font-bold">Kelola dan sebar informasi terbaru</p>
                     </div>
 
-                    <a href="{{ route('admin.news.create') }}"
-                       class="flex items-center gap-2 bg-white text-[#1E3A8A] font-extrabold text-sm px-6 py-4 rounded-2xl shadow-xl hover:scale-[1.02] active:scale-95 transition-all duration-200 uppercase tracking-wide">
+                    <x-atoms.button href="{{ route('admin.news.create') }}" variant="secondary" size="lg" :handdrawn="true" class="uppercase tracking-wide">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
                         </svg>
                         Tambah Berita
-                    </a>
+                    </x-atoms.button>
                 </div>
             </div>
         </div>
@@ -30,18 +29,18 @@
         <div class="flex-1 px-5 lg:px-8 py-6 lg:py-10">
             <div class="max-w-7xl mx-auto">
                 @if ($news->isEmpty())
-                    <div class="flex flex-col items-center justify-center gap-4 py-20 text-center bg-white rounded-[2.5rem] border border-gray-100 shadow-sm">
-                        <div class="w-24 h-24 bg-[#EFF6FF] rounded-[2rem] flex items-center justify-center text-5xl mb-2">📭</div>
+                    <div class="flex flex-col items-center justify-center gap-4 py-20 text-center bg-white hd-card border-none">
+                        <div class="w-24 h-24 bg-[#EFF6FF] hd-wobbly-md border-hd-ink/10 flex items-center justify-center text-5xl mb-2">📭</div>
                         <h3 class="text-[#1E3A8A] font-extrabold text-xl">Belum ada berita</h3>
-                        <p class="text-gray-400 text-sm max-w-xs mx-auto">Tambahkan berita baru untuk ditampilkan di aplikasi.</p>
+                        <p class="text-gray-400 text-sm max-w-xs mx-auto font-medium">Tambahkan berita baru untuk ditampilkan di aplikasi.</p>
                         <a href="{{ route('admin.news.create') }}" class="mt-2 text-[#2563EB] font-bold text-sm hover:underline">Mulai buat berita pertama &rarr;</a>
                     </div>
                 @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($news as $item)
-                            <div class="group bg-white border border-gray-100 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col">
+                            <div class="group bg-white hd-card overflow-hidden flex flex-col border-none">
                                 {{-- Thumbnail --}}
-                                <div class="relative h-48 overflow-hidden bg-gray-100">
+                                <div class="relative h-48 overflow-hidden bg-gray-100 hd-scribble-divider border-none">
                                     @if ($item->image_url)
                                         <img src="{{ $item->image_url }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                     @else
@@ -52,7 +51,7 @@
                                         </div>
                                     @endif
                                     <div class="absolute top-4 left-4">
-                                        <span class="bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-[#1E3A8A] uppercase tracking-widest shadow-sm">
+                                        <span class="bg-white/90 backdrop-blur-sm px-3 py-1 hd-wobbly-md text-[10px] font-extrabold text-[#1E3A8A] uppercase tracking-widest border border-hd-ink/10">
                                             {{ $item->published_at->format('d M Y') }}
                                         </span>
                                     </div>
@@ -63,12 +62,12 @@
                                     <h3 class="text-[#1E3A8A] font-extrabold text-lg leading-tight line-clamp-2 mb-2 group-hover:text-[#2563EB] transition-colors">
                                         {{ $item->title }}
                                     </h3>
-                                    <p class="text-gray-500 text-sm line-clamp-2 mb-6 flex-1">
+                                    <p class="text-gray-500 text-sm line-clamp-2 mb-6 flex-1 font-medium">
                                         {{ $item->short_description }}
                                     </p>
 
                                     {{-- Actions --}}
-                                    <div class="flex items-center justify-between pt-5 border-t border-gray-50">
+                                    <div class="flex items-center justify-between pt-5 hd-scribble-divider opacity-20">
                                         <div class="flex items-center gap-4">
                                             <a href="{{ route('admin.news.edit', $item) }}" class="text-[#2563EB] text-xs font-bold flex items-center gap-1.5 hover:underline">
                                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -76,7 +75,7 @@
                                                 </svg>
                                                 Edit
                                             </a>
-                                            <form action="{{ route('admin.news.destroy', $item) }}" method="POST" class="inline-block" onsubmit="return confirm('Are you sure you want to delete this news item?');">
+                                            <form action="{{ route('admin.news.destroy', $item) }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menghapus berita ini?');">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="text-red-400 text-xs font-bold flex items-center gap-1.5 hover:text-red-600 transition-colors">
@@ -88,7 +87,7 @@
                                             </form>
                                         </div>
                                         <div class="text-gray-300">
-                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                             </svg>
                                         </div>

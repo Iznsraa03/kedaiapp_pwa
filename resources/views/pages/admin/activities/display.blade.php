@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Display — {{ $activity->title }}</title>
+    <link rel="icon" type="image/png" href="/logo/KDCW.png">
     @vite(['resources/css/app.css'])
     <style>
         @keyframes slideInUp {
@@ -42,7 +43,7 @@
         }
     </style>
 </head>
-<body class="bg-primary min-h-screen overflow-hidden font-sans select-none p-16">
+<body class="bg-primary min-h-screen overflow-hidden font-sans select-none p-16 theme-handdrawn">
 
     {{-- Background blobs --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden">
@@ -62,12 +63,15 @@
 
             {{-- Logo & Brand --}}
             <div class="flex items-center gap-4">
-                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center">
+                <div class="w-14 h-14 bg-white hd-wobbly-md flex items-center justify-center border border-hd-ink/10">
                     <img src="/logo/KDCW.png" alt="KeDai" class="w-9 h-9 object-contain">
                 </div>
                 <div>
-                    <p class="text-white font-extrabold text-base leading-tight">KeDai Computerworks</p>
-                    <p class="text-blue-200 text-xs">Management System</p>
+                    <div class="flex items-baseline gap-1.5">
+                        <span class="text-white font-extrabold text-xl font-rockwell">KeDai</span>
+                        <span class="text-blue-100 font-medium text-lg font-staccato">Computerworks</span>
+                    </div>
+                    <p class="text-blue-200 text-[10px] font-bold tracking-[0.2em] uppercase">Management System</p>
                 </div>
             </div>
 
@@ -108,7 +112,7 @@
         <div class="flex flex-12 gap-3 min-h-6 mt-10">
 
             {{-- LEFT: Last Scan Big Display --}}
-            <div class="flex-1 glass rounded-3xl flex flex-col items-center justify-center p-10">
+            <div class="flex-1 hd-card flex flex-col items-center justify-center p-10 bg-white/10 backdrop-blur-md border-white/20">
                 <div id="scan-result" class="flex flex-col items-center gap-6 w-full slide-in-up">
 
                     <!-- {{-- Avatar --}}
@@ -155,15 +159,15 @@
             <div class="w-80 xl:w-96 flex flex-col gap-4 min-h-0">
 
                 {{-- Stats --}}
-                    <div class="glass rounded-2xl px-4 py-3 text-center">
+                    <div class="hd-card px-4 py-3 text-center bg-white/10 backdrop-blur-md border-white/20">
                         <p id="attendee-count" class="text-white font-extrabold text-3xl">{{ $activity->attendances()->count() }}</p>
-                        <p class="text-blue-200 text-xs mt-0.5">Hadir</p>
+                        <p class="text-blue-200 text-xs mt-0.5 font-bold">Peserta Hadir</p>
                     </div>
 
                 {{-- List header --}}
                 <div class="flex items-center justify-between px-1">
                     <p class="text-white font-bold text-sm">Peserta Terbaru</p>
-                    <span id="total-count" class="bg-white/10 text-blue-100 text-xs font-bold px-3 py-1 rounded-xl">
+                    <span id="total-count" class="bg-white/20 text-blue-100 text-xs font-bold px-3 py-1 hd-wobbly-md border border-white/20">
                         {{ $activity->attendances()->count() }} orang
                     </span>
                 </div>

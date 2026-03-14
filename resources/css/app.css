@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap');
 
 /* ===== Custom Fonts ===== */
 @font-face {
@@ -26,11 +27,23 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
     --font-rockwell: 'RockwellBT';
     --font-staccato: 'Staccato22BT';
+    --font-heading: 'Kalam', cursive;
+    --font-hand: 'Patrick Hand', cursive;
 
     --color-primary: #2563EB;
     --color-primary-dark: #1D4ED8;
     --color-bg-soft: #EFF6FF;
     --color-navy: #1E3A8A;
+
+    --color-hd-paper: #fdfbf7;
+    --color-hd-ink: #2d2d2d;
+    --color-hd-muted: #e5e0d8;
+
+    --radius-hd-lg: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    --radius-hd-md: 18px 30px 22px 26px / 24px 18px 28px 20px;
+
+    --shadow-hd: 4px 4px 0 0 #2d2d2d;
+    --shadow-hd-sm: 2px 2px 0 0 #2d2d2d;
 }
 
 /* Splash Screen Animation */
@@ -106,4 +119,67 @@
 /* Tap highlight removal for mobile */
 * {
     -webkit-tap-highlight-color: transparent;
+}
+.theme-handdrawn {
+    --font-sans: 'Patrick Hand', cursive;
+    font-family: var(--font-sans);
+    background-color: var(--color-hd-paper);
+    color: var(--color-hd-ink);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 0.01em;
+}
+
+.theme-handdrawn :where(h1, h2, h3, h4, h5, h6) {
+    font-family: 'Kalam', cursive;
+    letter-spacing: -0.01em;
+}
+
+.hd-paper-bg {
+    background-color: var(--color-hd-paper);
+    background-image: radial-gradient(var(--color-hd-muted) 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+}
+
+.hd-card {
+    background: white;
+    border: 2px solid var(--color-hd-ink);
+    border-radius: var(--radius-hd-md);
+    box-shadow: var(--shadow-hd);
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.hd-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-hd-sm);
+}
+
+.hd-wobbly-md {
+    border-radius: var(--radius-hd-md);
+    border: 2px solid var(--color-hd-ink);
+}
+
+.hd-wobbly-lg {
+    border-radius: var(--radius-hd-lg);
+    border: 2px solid var(--color-hd-ink);
+}
+
+.hd-shadow {
+    box-shadow: var(--shadow-hd);
+}
+
+.hd-shadow-sm {
+    box-shadow: var(--shadow-hd-sm);
+}
+
+.hd-dashed {
+    border-style: dashed;
+    border-width: 2px;
+    border-color: var(--color-hd-ink);
+}
+
+.hd-scribble-divider {
+    height: 4px;
+    background: var(--color-hd-ink);
+    mask-image: url("data:image/svg+xml,%3Csvg width='100' height='4' viewBox='0 0 100 4' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 2C20 0 30 4 50 2C70 0 80 4 100 2' stroke='black' stroke-width='2'/%3E%3C/svg%3E");
+    mask-repeat: repeat-x;
 }

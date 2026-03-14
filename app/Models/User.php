@@ -28,6 +28,11 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
     public function getAvatarUrlAttribute(): string
     {
         return $this->avatar

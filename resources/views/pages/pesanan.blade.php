@@ -1,7 +1,7 @@
 <x-app-layout>
 
     {{-- Header --}}
-    <div class="bg-[#2563EB] px-5 pt-12 pb-6 relative overflow-hidden rounded-b-[2rem]">
+    <div class="px-5 pt-12 pb-6 relative overflow-hidden bg-[#1E3A8A] hd-wobbly-lg mt-2 mx-2">
         <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-[24px] border-white/10 pointer-events-none"></div>
         <div class="absolute top-10 -right-2 w-16 h-16 rounded-full border-[10px] border-white/10 pointer-events-none"></div>
 
@@ -23,10 +23,10 @@
             @endphp
             @foreach($tabs as $key => $label)
             <a href="{{ route('pesanan', $key !== 'semua' ? ['status' => $key] : []) }}"
-               class="flex-shrink-0 px-4 py-2 rounded-2xl text-xs font-semibold transition-all duration-200
+               class="flex-shrink-0 px-4 py-2 text-xs font-semibold transition-all duration-200
                    {{ $active === $key
-                       ? 'bg-white text-[#2563EB] shadow-md'
-                       : 'bg-white/20 text-white hover:bg-white/30' }}">
+                       ? 'bg-white text-[#1E3A8A] hd-wobbly-md border-hd-ink'
+                       : 'bg-white/20 text-white hd-wobbly-md border-transparent hover:bg-white/30' }}">
                 {{ $label }}
             </a>
             @endforeach
@@ -48,7 +48,7 @@
                 <div class="flex items-start gap-3">
 
                     {{-- Emoji --}}
-                    <div class="w-12 h-12 bg-[#EFF6FF] rounded-2xl flex items-center justify-center text-2xl flex-shrink-0">
+                    <div class="w-12 h-12 bg-blue-50 hd-wobbly-md flex items-center justify-center text-2xl flex-shrink-0 border border-hd-ink/10">
                         {{ $activity->emoji }}
                     </div>
 
@@ -56,19 +56,18 @@
                     <div class="flex-1 min-w-0">
                         <div class="flex items-start justify-between gap-2">
                             <p class="text-[#1E3A8A] font-bold text-sm leading-snug">{{ $activity->title }}</p>
-                            <span class="text-[10px] font-semibold px-2.5 py-1 rounded-xl flex-shrink-0 {{ $activity->badgeClass() }}">
+                            <x-atoms.badge color="{{ str_contains($activity->badgeClass(), 'green') ? 'green' : (str_contains($activity->badgeClass(), 'red') ? 'red' : (str_contains($activity->badgeClass(), 'yellow') ? 'yellow' : 'blue')) }}" :handdrawn="true" class="flex-shrink-0">
                                 {{ $activity->badgeLabel() }}
-                            </span>
+                            </x-atoms.badge>
                         </div>
 
                         {{-- Tanggal --}}
-                        <div class="flex items-center gap-1 mt-1.5">
-                            <svg class="w-3 h-3 text-gray-300 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <div class="flex items-center gap-1 mt-1.5 hd-wobbly-md bg-white border border-hd-ink/10 px-2 py-1 w-fit">
+                            <svg class="w-3 h-3 text-[#2563EB] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <span class="text-gray-400 text-xs">
+                            <span class="text-gray-600 text-[10px] font-bold">
                                 {{ $activity->starts_at->translatedFormat('d M Y') }}
-                                · {{ $activity->starts_at->format('H.i') }}–{{ $activity->ends_at->format('H.i') }} WIB
                             </span>
                         </div>
 
@@ -93,9 +92,9 @@
             </div>
         </a>
         @empty
-        <div class="flex flex-col items-center gap-3 py-16 text-center">
-            <div class="w-16 h-16 bg-[#EFF6FF] rounded-3xl flex items-center justify-center text-3xl">📭</div>
-            <p class="text-[#1E3A8A] font-semibold text-sm">Belum ada kegiatan</p>
+        <div class="flex flex-col items-center gap-3 py-16 text-center bg-white hd-card border-none">
+            <div class="w-16 h-16 bg-[#EFF6FF] hd-wobbly-md flex items-center justify-center text-3xl border border-hd-ink/10">📭</div>
+            <p class="text-[#1E3A8A] font-extrabold text-base">Belum ada kegiatan</p>
             <p class="text-gray-400 text-xs">Pantau terus untuk update kegiatan terbaru.</p>
         </div>
         @endforelse

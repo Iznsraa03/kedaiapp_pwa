@@ -4,13 +4,13 @@
     <x-atoms.toast />
 
     {{-- ===== HEADER ADMIN ===== --}}
-    <div class="bg-[#1E3A8A] px-5 pt-12 pb-8 relative overflow-hidden rounded-b-[2rem]">
+    <div class="bg-[#1E3A8A] px-5 pt-12 pb-8 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
         <div class="absolute -top-6 -right-6 w-40 h-40 rounded-full border-[28px] border-white/10 pointer-events-none"></div>
         <div class="absolute top-12 -right-2 w-16 h-16 rounded-full border-[10px] border-white/10 pointer-events-none"></div>
 
         {{-- Back --}}
         <a href="{{ route('admin.activities.index') }}"
-           class="relative z-10 inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-semibold mb-4 active:opacity-60 transition-all">
+           class="relative z-10 inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-semibold mb-4 active:opacity-60 transition-all text-decoration-none border border-transparent">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
             </svg>
@@ -18,13 +18,13 @@
         </a>
 
         {{-- Badge Admin --}}
-        <div class="relative z-10 inline-flex items-center gap-1.5 bg-white/20 rounded-xl px-3 py-1.5 mb-3">
+        <div class="relative z-10 inline-flex items-center gap-1.5 bg-white/20 hd-wobbly-md px-3 py-1.5 mb-3 border border-hd-ink/10">
             <div class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></div>
             <span class="text-white text-xs font-bold tracking-wide">MODE ADMIN</span>
         </div>
 
         <div class="relative z-10 flex items-center gap-4">
-            <div class="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0">
+            <div class="w-14 h-14 bg-white/20 hd-wobbly-md flex items-center justify-center text-3xl flex-shrink-0 border border-hd-ink/10">
                 {{ $activity->emoji }}
             </div>
             <div class="flex-1 min-w-0">
@@ -38,20 +38,20 @@
 
         {{-- Stats Row --}}
         <div class="relative z-10 flex gap-4 mt-5">
-            <div class="flex-1 bg-white/10 rounded-2xl px-4 py-3 text-center">
+            <div class="flex-1 bg-white/10 hd-wobbly-md px-4 py-3 text-center border border-hd-ink/10">
                 <p class="text-white font-extrabold text-2xl" id="attendee-count">{{ $attendees->count() }}</p>
-                <p class="text-blue-200 text-xs mt-0.5">Hadir</p>
+                <p class="text-blue-200 text-xs mt-0.5 font-bold">Hadir</p>
             </div>
-            <div class="flex-1 bg-white/10 rounded-2xl px-4 py-3 text-center">
+            <div class="flex-1 bg-white/10 hd-wobbly-md px-4 py-3 text-center border border-hd-ink/10">
                 <p class="text-white font-extrabold text-2xl" id="late-count">{{ $attendees->where('status', 'late')->count() }}</p>
-                <p class="text-blue-200 text-xs mt-0.5">Terlambat</p>
+                <p class="text-blue-200 text-xs mt-0.5 font-bold">Terlambat</p>
             </div>
-            <div class="flex-1 bg-white/10 rounded-2xl px-4 py-3 text-center">
-                <span class="inline-flex items-center px-2 py-1 rounded-xl text-[10px] font-bold
+            <div class="flex-1 bg-white/10 hd-wobbly-md px-4 py-3 text-center border border-hd-ink/10">
+                <span class="inline-flex items-center px-2 py-1 hd-wobbly-md text-[10px] font-extrabold border border-white/20
                     {{ $activity->status === 'open' ? 'bg-green-400/30 text-green-200' : 'bg-white/20 text-white/70' }}">
                     {{ $activity->badgeLabel() }}
                 </span>
-                <p class="text-blue-200 text-xs mt-1">Status</p>
+                <p class="text-blue-200 text-xs mt-1 font-bold">Status</p>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
             {{-- Column Left: SCANNERS --}}
             <div class="space-y-6">
                 {{-- ===== QR SCANNER ORGANISM ===== --}}
-                <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
+                <div class="bg-white hd-card p-6 border-none">
                     <div class="flex items-center gap-2 mb-4">
                         <div class="w-8 h-8 bg-[#EFF6FF] rounded-xl flex items-center justify-center">
                             <svg class="w-4 h-4 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -86,7 +86,7 @@
             {{-- Column Right: DATA --}}
             <div class="space-y-6">
                 {{-- ===== DAFTAR PESERTA HADIR ===== --}}
-                <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm">
+                <div class="bg-white hd-card p-6 border-none">
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-2">
                             <div class="w-8 h-8 bg-[#EFF6FF] rounded-xl flex items-center justify-center">
@@ -102,32 +102,32 @@
                     </div>
 
                     {{-- List Attendees --}}
-                    <div class="space-y-2 max-h-[600px] overflow-y-auto pr-2 scrollbar-hide" id="attendee-list"
+                    <div class="space-y-3 max-h-[600px] overflow-y-auto pr-2 scrollbar-hide" id="attendee-list"
                          x-data="attendeeList"
                          @attendee-added.window="addAttendee($event.detail.attendee)">
 
                         @forelse($attendees as $att)
-                        <div class="attendee-item flex items-center gap-3 p-3 bg-gray-50 rounded-2xl">
-                            <div class="w-9 h-9 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div class="attendee-item flex items-center gap-3 p-3 bg-gray-50 hd-wobbly-md border-[#2d2d2d]/10">
+                            <div class="w-9 h-9 bg-[#2563EB] hd-wobbly-md flex items-center justify-center flex-shrink-0 border-hd-ink/10">
                                 <span class="text-white text-xs font-bold">{{ strtoupper(substr($att->user->name, 0, 2)) }}</span>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-[#1E3A8A] font-semibold text-sm truncate">{{ $att->user->name }}</p>
-                                <p class="text-gray-400 text-xs font-mono">{{ $att->user->nra }}</p>
+                                <p class="text-[#1E3A8A] font-extrabold text-sm truncate">{{ $att->user->name }}</p>
+                                <p class="text-gray-400 text-[10px] font-mono leading-none mt-0.5">{{ $att->user->nra }}</p>
                             </div>
                             <div class="text-right flex-shrink-0">
-                                <span class="inline-block px-2 py-0.5 rounded-lg text-[10px] font-semibold
+                                <span class="inline-block px-2 py-0.5 hd-wobbly-md text-[10px] font-bold border-hd-ink/10
                                     {{ $att->status === 'present' ? 'bg-green-50 text-green-600' : 'bg-yellow-50 text-yellow-600' }}">
                                     {{ $att->status === 'present' ? 'Hadir' : 'Terlambat' }}
                                 </span>
-                                <p class="text-gray-300 text-[10px] mt-0.5">{{ $att->scanned_at->format('H:i') }}</p>
+                                <p class="text-gray-300 text-[10px] mt-1">{{ $att->scanned_at->format('H:i') }}</p>
                             </div>
                         </div>
                         @empty
-                        <div id="empty-state" class="flex flex-col items-center gap-2 py-8 text-center">
-                            <div class="w-14 h-14 bg-[#EFF6FF] rounded-3xl flex items-center justify-center text-2xl">👥</div>
-                            <p class="text-gray-400 text-sm">Belum ada peserta yang hadir.</p>
-                            <p class="text-gray-300 text-xs">Mulai scan untuk mencatat kehadiran.</p>
+                        <div id="empty-state" class="flex flex-col items-center gap-2 py-10 text-center bg-gray-50 hd-wobbly-md border-hd-ink/5">
+                            <div class="w-14 h-14 bg-blue-50 hd-wobbly-md flex items-center justify-center text-3xl border-hd-ink/10 mb-2">👥</div>
+                            <p class="text-[#1E3A8A] font-bold text-sm">Belum ada peserta</p>
+                            <p class="text-gray-400 text-[10px]">Mulai scan untuk mencatat kehadiran</p>
                         </div>
                         @endforelse
                     </div>
@@ -174,19 +174,19 @@
                     const statusLabel = att.status === 'present' ? 'Hadir' : 'Terlambat';
 
                     const el = document.createElement('div');
-                    el.className = 'attendee-item flex items-center gap-3 p-3 bg-gray-50 rounded-2xl';
+                    el.className = 'attendee-item flex items-center gap-3 p-3 bg-gray-50 hd-wobbly-md border-[#2d2d2d]/10 mb-3';
                     el.style.animation = 'fadeInUp 0.3s ease-out';
                     el.innerHTML = `
-                        <div class="w-9 h-9 bg-[#2563EB] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <div class="w-9 h-9 bg-[#2563EB] hd-wobbly-md flex items-center justify-center flex-shrink-0 border-hd-ink/10">
                             <span class="text-white text-xs font-bold">${initials}</span>
                         </div>
                         <div class="flex-1 min-w-0">
-                            <p class="text-[#1E3A8A] font-semibold text-sm truncate">${att.name}</p>
-                            <p class="text-gray-400 text-xs font-mono">${att.nra}</p>
+                            <p class="text-[#1E3A8A] font-extrabold text-sm truncate">${att.name}</p>
+                            <p class="text-gray-400 text-[10px] font-mono leading-none mt-0.5">${att.nra}</p>
                         </div>
                         <div class="text-right flex-shrink-0">
-                            <span class="inline-block px-2 py-0.5 rounded-lg text-[10px] font-semibold ${statusClass}">${statusLabel}</span>
-                            <p class="text-gray-300 text-[10px] mt-0.5">${att.scanned_at}</p>
+                            <span class="inline-block px-2 py-0.5 hd-wobbly-md text-[10px] font-bold border-hd-ink/10 ${statusClass}">${statusLabel}</span>
+                            <p class="text-gray-300 text-[10px] mt-1">${att.scanned_at}</p>
                         </div>
                     `;
 

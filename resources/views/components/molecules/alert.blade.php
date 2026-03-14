@@ -1,5 +1,6 @@
 @props([
-    'type' => 'error', // error | success | info
+    'type'      => 'error',
+    'handdrawn' => false,
 ])
 
 @php
@@ -17,7 +18,7 @@
     $i = $iconStyles[$type] ?? $iconStyles['error'];
 @endphp
 
-<div {{ $attributes->merge(['class' => "flex items-start gap-3 border rounded-2xl px-4 py-3 $s"]) }}>
+<div {{ $attributes->merge(['class' => "flex items-start gap-3 border px-4 py-3 " . ($handdrawn ? 'bg-white hd-card' : "rounded-2xl $s")]) }}>
     <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 {{ $i }}">
         @if($type === 'error')
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

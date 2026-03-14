@@ -1,5 +1,6 @@
 @props([
-    'color' => 'blue', // blue | green | yellow | red | gray
+    'color'     => 'blue',
+    'handdrawn' => false,
 ])
 
 @php
@@ -10,9 +11,9 @@
         'red'    => 'bg-red-100 text-red-500',
         'gray'   => 'bg-gray-100 text-gray-500',
     ];
-    $cls = $colors[$color] ?? $colors['blue'];
+    $cls = $colors[(string)$color] ?? $colors['blue'];
 @endphp
 
-<span {{ $attributes->merge(['class' => "inline-flex items-center px-3 py-1 rounded-xl text-xs font-semibold $cls"]) }}>
+<span {{ $attributes->merge(['class' => "inline-flex items-center px-3 py-1 text-xs font-semibold $cls " . ($handdrawn ? 'hd-wobbly-md border-[#2d2d2d] bg-white' : 'rounded-xl')]) }}>
     {{ $slot }}
 </span>

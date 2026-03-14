@@ -6,6 +6,11 @@
     <meta name="theme-color" content="#2563EB">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Login — KedaiApp</title>
+    <link rel="icon" type="image/png" href="/logo/KDCW.png">
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @keyframes slideUp {
@@ -73,23 +78,24 @@
         .field-input .eye-btn:active { transform: scale(.9); }
     </style>
 </head>
-<body class="bg-[#EFF6FF] font-sans antialiased min-h-screen flex items-center justify-center p-4 lg:p-8">
+<body class="bg-[#EFF6FF] font-sans antialiased min-h-screen flex items-center justify-center p-4 lg:p-8 theme-handdrawn">
 
-<div class="w-full max-w-md bg-white flex flex-col rounded-[2.5rem] overflow-hidden shadow-2xl lg:shadow-3xl lg:border lg:border-blue-100">
+<div class="w-full max-w-md bg-white flex flex-col hd-card overflow-hidden">
 
     {{-- HERO --}}
-    <div class="s1 bg-[#2563EB] px-6 pt-16 pb-10 relative overflow-hidden rounded-b-[2.5rem]">
+    <div class="s1 bg-[#1E3A8A] px-6 pt-16 pb-10 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
         <div class="absolute -top-8 -right-8 w-40 h-40 rounded-full border-[28px] border-white/10 pointer-events-none"></div>
         <div class="absolute bottom-0 -left-6 w-28 h-28 rounded-full border-[18px] border-white/10 pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-col items-center text-center gap-3">
-            <div class="w-24 h-24 bg-white rounded-3xl flex items-center justify-center shadow-lg p-2">
+            <div class="w-24 h-24 bg-white flex items-center justify-center hd-wobbly-md border-hd-ink p-2">
                 <img src="/logo/KDCW.png" alt="KeDai Computerworks" class="w-full h-full object-contain">
             </div>
-            <div>
-                <h1 class="text-white tracking-tight flex items-baseline justify-center">
-                    <img src="/logo/KD.png" alt="KeDai Computerworks" class="h-9 w-auto">
-                </h1>
+            <div class="flex flex-col items-center">
+                <div class="flex items-baseline gap-2">
+                    <span class="text-white text-4xl font-extrabold tracking-tight font-rockwell">KeDai</span>
+                    <span class="text-white/90 text-2xl font-medium font-staccato">Computerworks</span>
+                </div>
             </div>
         </div>
     </div>
@@ -120,7 +126,7 @@
                 <div class="field-input {{ $errors->has('email') ? 'error' : '' }}">
                     <span class="icon">
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12A4.5 4.5 0 0112 16.5C9.695 16.5 7.747 15.006 7 12H3C3.753 15.006 5.695 16.5 8 16.5A4.5 4.5 0 0012 21C14.305 21 16.253 19.506 17 16.5H21C20.247 19.506 18.305 21 16 21A4.5 4.5 0 0112 16.5V12C12 9.695 10.506 7.747 7.5 7H3M12 3V7.5C12 9.695 10.506 11.747 7.5 12H3"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/>
                         </svg>
                     </span>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan email kamu" autocomplete="username">
@@ -150,21 +156,20 @@
 
             {{-- Submit --}}
             <div class="s4 pt-2">
-                <button type="submit"
-                    class="w-full bg-[#2563EB] hover:bg-blue-700 active:scale-[0.97] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center gap-2 transition-all duration-200 group">
+                <x-atoms.button type="submit" variant="primary" size="lg" :handdrawn="true" class="w-full group">
                     Masuk
                     <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
                     </svg>
-                </button>
+                </x-atoms.button>
             </div>
         </form>
 
         {{-- Divider --}}
         <div class="s4 flex items-center gap-3">
-            <div class="flex-1 h-px bg-gray-100"></div>
-            <span class="text-gray-300 text-xs font-semibold tracking-widest">ATAU</span>
-            <div class="flex-1 h-px bg-gray-100"></div>
+            <div class="flex-1 hd-scribble-divider opacity-20"></div>
+            <span class="text-gray-300 text-xs font-semibold tracking-widest font-patrick">ATAU</span>
+            <div class="flex-1 hd-scribble-divider opacity-20"></div>
         </div>
 
         {{-- Register Link --}}

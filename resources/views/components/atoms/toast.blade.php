@@ -23,9 +23,10 @@
         >
             <div
                 :class="{
-                    'bg-green-50 border-green-100': toast.type === 'success',
-                    'bg-red-50 border-red-100':   toast.type === 'error',
-                    'bg-blue-50 border-blue-100':  toast.type === 'info',
+                    'bg-white border-[#2d2d2d] hd-card': toast.handdrawn,
+                    'bg-green-50 border-green-100': !toast.handdrawn && toast.type === 'success',
+                    'bg-red-50 border-red-100':   !toast.handdrawn && toast.type === 'error',
+                    'bg-blue-50 border-blue-100':  !toast.handdrawn && toast.type === 'info',
                 }"
                 class="flex items-center gap-3 border rounded-2xl px-4 py-3 shadow-lg"
             >
@@ -74,9 +75,9 @@
     function toastManager() {
         return {
             toasts: [],
-            show({ type = 'info', message = '' }) {
+            show({ type = 'info', message = '', handdrawn = document.body.classList.contains('theme-handdrawn') }) {
                 const id = Date.now();
-                this.toasts.push({ id, type, message, visible: true });
+                this.toasts.push({ id, type, message, handdrawn, visible: true });
                 setTimeout(() => {
                     const t = this.toasts.find(t => t.id === id);
                     if (t) t.visible = false;

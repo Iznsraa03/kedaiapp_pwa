@@ -1,10 +1,8 @@
-@props([
-    'title'    => '',
-    'subtitle' => '',
-    'back'     => null,   // route name untuk back button
+    'back'      => null,
+    'handdrawn' => false,
 ])
 
-<div class="bg-[#2563EB] px-5 pt-12 pb-6 rounded-b-3xl relative overflow-hidden">
+<div class="px-5 pt-12 pb-6 relative overflow-hidden {{ $handdrawn ? 'bg-[#1E3A8A] hd-wobbly-lg mt-2 mx-2' : 'bg-[#2563EB] rounded-b-3xl' }}">
     {{-- Dekorasi --}}
     <div class="absolute -top-6 -right-6 w-32 h-32 rounded-full border-[20px] border-white/10 pointer-events-none"></div>
     <div class="absolute -bottom-4 -left-4 w-20 h-20 rounded-full border-[14px] border-white/10 pointer-events-none"></div>

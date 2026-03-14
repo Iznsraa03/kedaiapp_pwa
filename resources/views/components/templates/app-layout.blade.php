@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="{{ config('app.name', 'KedaiApp') }}">
     <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" type="image/png" href="/logo/KDCW.png">
 
     {{-- Apple Touch Icons (semua ukuran untuk iOS) --}}
     <link rel="apple-touch-icon" href="/icons/icon-180.png">
@@ -27,11 +28,16 @@
     <meta name="msapplication-TileColor" content="#2563EB">
     <meta name="msapplication-TileImage" content="/icons/icon-144.png">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Fonts --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap" rel="stylesheet">
+
     <title>{{ $title ?? config('app.name', 'KedaiApp') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="bg-bg-soft font-sans antialiased">
+<body class="bg-bg-soft font-sans antialiased theme-handdrawn">
 
     {{-- ===== SPLASH SCREEN OVERLAY ===== --}}
     <div id="splash-overlay" style="position:fixed;inset:0;z-index:9999;background:#2563EB;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
@@ -47,8 +53,11 @@
                 <img src="/logo/KDCW.png" alt="KeDai Computerworks" style="width:100%;height:100%;object-fit:contain;">
             </div>
             <div style="text-align:center;">
-                <img src="/logo/KD.png" alt="KeDai Computerworks" style="height:40px; width:auto; margin:0 auto;">
-                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:8px;letter-spacing:0.2em;text-transform:uppercase;">Management System</p>
+                <div style="display:flex;align-items:baseline;gap:8px;justify-content:center;">
+                    <span style="color:white;font-size:2.25rem;font-weight:900;letter-spacing:-0.025em;font-family:RockwellBT, serif;">KeDai</span>
+                    <span style="color:rgba(255,255,255,0.9);font-size:1.5rem;font-family:Staccato22BT, cursive;">Computerworks</span>
+                </div>
+                <p style="color:#bfdbfe;font-size:0.75rem;margin-top:8px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;">Management System</p>
             </div>
         </div>
 
@@ -96,7 +105,7 @@
 
     <div class="app-shell">
         {{-- Desktop Sidebar --}}
-        <x-organisms.desktop-sidebar />
+        <x-organisms.desktop-sidebar :handdrawn="true" />
 
         <div class="app-main">
             <div id="page-content" class="app-container min-h-screen bg-white relative flex flex-col shadow-xl lg:shadow-none">
@@ -282,7 +291,7 @@
 
                 {{-- Bottom Navigation Bar (Mobile Only) --}}
                 <div class="lg:hidden">
-                    <x-organisms.bottom-nav />
+                    <x-organisms.bottom-nav :handdrawn="true" />
                 </div>
             </div>
         </div>

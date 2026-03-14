@@ -5,7 +5,8 @@
     'icon'    => null,
     'error'   => false,
     'toggle'  => false,   // true = tambahkan toggle show/hide password
-    'eyeId'   => null,
+    'eyeId'     => null,
+    'handdrawn' => false,
 ])
 
 <div {{ $attributes->merge(['class' => 'space-y-2']) }}>
@@ -27,6 +28,7 @@
             :name="$name"
             :type="$type"
             :error="$error"
+            :handdrawn="$handdrawn"
             :class="$icon ? 'pl-12' : ''"
             :class="$toggle ? 'pr-12' : ''"
             {{ $attributes->only(['placeholder', 'value', 'autocomplete', 'required']) }}

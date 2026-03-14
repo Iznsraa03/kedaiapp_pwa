@@ -7,6 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>KedaiApp</title>
+    <link rel="icon" type="image/png" href="/logo/KDCW.png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-[#2563EB] font-sans">
@@ -27,8 +28,11 @@
             </div>
 
             {{-- App Name --}}
-            <div class="text-center">
-                <img src="/logo/KD.png" alt="KeDai Computerworks" class="h-10 w-auto mx-auto">
+            <div class="flex flex-col items-center">
+                <div class="flex items-baseline gap-2">
+                    <span class="text-white text-4xl font-extrabold tracking-tight font-rockwell">KeDai</span>
+                    <span class="text-white/90 text-2xl font-medium font-staccato">Computerworks</span>
+                </div>
             </div>
         </div>
 

@@ -19,7 +19,7 @@
         }">
         
         {{-- HEADER --}}
-        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden rounded-b-[2rem] lg:rounded-none">
+        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
             <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-[24px] border-white/10 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto w-full relative z-10">
@@ -74,42 +74,39 @@
 
                     {{-- LEFT COLUMN: MAIN FORM --}}
                     <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 lg:p-10 space-y-8">
+                        <div class="bg-white hd-card p-6 lg:p-10 space-y-8 border-none">
                             
                             {{-- Row: Emoji + Title --}}
                             <div class="flex flex-col sm:flex-row gap-6">
-                                <div class="w-24 space-y-2">
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest text-center">Icon</label>
-                                    <input type="text" name="emoji" x-model="form.emoji" id="emoji_input" placeholder="🔥"
-                                        class="w-full px-4 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-center text-3xl focus:outline-none focus:border-[#2563EB] transition-all">
+                                <div class="w-24 space-y-3">
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest text-center px-1">Icon</label>
+                                    <x-atoms.input type="text" name="emoji" x-model="form.emoji" id="emoji_input" placeholder="🔥" :handdrawn="true" class="!text-3xl text-center !h-20" />
                                 </div>
-                                <div class="flex-1 space-y-2">
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Judul Kegiatan <span class="text-red-400">*</span></label>
-                                    <input type="text" name="title" x-model="form.title" id="title_input" placeholder="Contoh: Rapat Koordinasi Rutin"
-                                        class="w-full px-5 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-lg font-bold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all duration-200" required>
+                                <div class="flex-1 space-y-3">
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Judul Kegiatan <span class="text-red-400">*</span></label>
+                                    <x-atoms.input type="text" name="title" x-model="form.title" placeholder="Contoh: Rapat Koordinasi Rutin" :handdrawn="true" class="!text-lg font-bold" required />
                                 </div>
                             </div>
 
                             {{-- Location --}}
-                            <div class="space-y-2">
-                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Lokasi</label>
+                            <div class="space-y-3">
+                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Lokasi</label>
                                 <div class="relative group">
-                                    <span class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#2563EB] transition-colors">
+                                    <x-atoms.input type="text" name="location" x-model="form.location" placeholder="Gedung KeDai Lt. 3" :handdrawn="true" class="!pl-12" />
+                                    <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#2563EB] transition-colors">
                                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         </svg>
                                     </span>
-                                    <input type="text" name="location" x-model="form.location" id="location_input" placeholder="Gedung KeDai Lt. 3"
-                                        class="w-full pl-14 pr-5 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-sm font-bold focus:outline-none focus:border-[#2563EB] transition-all duration-200">
                                 </div>
                             </div>
 
                             {{-- Description --}}
-                            <div class="space-y-2">
-                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Deskripsi Kegiatan</label>
-                                <textarea name="description" x-model="form.description" id="description_input" rows="8" placeholder="Tuliskan jadwal, agenda, atau info penting lainnya..."
-                                    class="w-full px-6 py-6 bg-[#EFF6FF] border-2 border-transparent rounded-[2rem] text-[#1E3A8A] text-base font-medium leading-relaxed focus:outline-none focus:border-[#2563EB] transition-all duration-200 resize-none font-sans"></textarea>
+                            <div class="space-y-3">
+                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Deskripsi Kegiatan</label>
+                                <textarea name="description" x-model="form.description" rows="8" placeholder="Tuliskan jadwal, agenda, atau info penting..."
+                                    class="w-full px-6 py-6 bg-white hd-wobbly-md border-2 border-hd-ink text-[#1E3A8A] text-base font-medium leading-relaxed focus:outline-none focus:border-[#2563EB] transition-all duration-200 resize-none font-sans"></textarea>
                             </div>
                         </div>
                     </div>
@@ -118,13 +115,13 @@
                     <div class="space-y-6 lg:sticky lg:top-8">
                         
                         {{-- Image Config Card --}}
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 overflow-hidden">
+                        <div class="bg-white hd-card p-6 overflow-hidden border-none text-decoration-none">
                             <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest mb-4">Gambar / Poster</label>
                             
                             <div class="relative group">
                                 <input type="file" name="image" id="image_input" class="hidden" accept="image/*"
                                     @change="let file = $event.target.files[0]; if(file){ let reader = new FileReader(); reader.onload = (e) => { image_preview = e.target.result }; reader.readAsDataURL(file); }">
-                                <label for="image_input" class="flex flex-col items-center justify-center w-full h-48 bg-[#EFF6FF] border-2 border-dashed border-blue-200 rounded-[1.5rem] cursor-pointer hover:bg-blue-50 transition-all overflow-hidden relative">
+                                <label for="image_input" class="flex flex-col items-center justify-center w-full h-48 bg-blue-50 hd-wobbly-md cursor-pointer hover:bg-blue-100 transition-all overflow-hidden relative border border-hd-ink/10">
                                     <template x-if="!image_preview">
                                         <div class="flex flex-col items-center text-center px-4">
                                             <svg class="w-10 h-10 text-[#2563EB] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -146,7 +143,7 @@
                         </div>
 
                         {{-- Schedule & Status Card --}}
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 space-y-6">
+                        <div class="bg-white hd-card p-6 space-y-6 border-none">
                             
                             {{-- Date Row --}}
                             <div class="grid grid-cols-1 gap-4">
@@ -179,17 +176,16 @@
                         </div>
 
                         {{-- Actions Card --}}
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 space-y-3">
-                            <button type="submit"
-                                class="w-full bg-[#2563EB] text-white font-extrabold py-4 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-600 active:scale-[0.97] transition-all duration-200 text-sm uppercase tracking-wide">
+                        <div class="bg-white hd-card p-6 space-y-3 border-none">
+                            <x-atoms.button type="submit" variant="primary" size="lg" :handdrawn="true" class="w-full">
                                 Simpan Perubahan
-                            </button>
-                            <button type="button" @click="showPreview = true" class="w-full flex items-center justify-center gap-2 bg-[#1E3A8A] text-white font-bold py-4 rounded-2xl active:scale-95 transition-all">
+                            </x-atoms.button>
+                            <x-atoms.button type="button" @click="showPreview = true" variant="primary" size="lg" :handdrawn="true" class="w-full flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
                                 </svg>
                                 Mobile Preview
-                            </button>
+                            </x-atoms.button>
                         </div>
                     </div>
                 </form>

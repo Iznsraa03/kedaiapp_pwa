@@ -1,12 +1,12 @@
     <x-app-layout>
     <div class="min-h-screen bg-gray-50 flex flex-col">
         {{-- Header --}}
-        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden rounded-b-[2rem] lg:rounded-none">
+        <div class="bg-[#1E3A8A] px-5 lg:px-8 pt-12 lg:pt-16 pb-7 lg:pb-10 relative overflow-hidden hd-wobbly-lg mt-2 mx-2">
             <div class="absolute -top-6 -right-6 w-36 h-36 rounded-full border-[24px] border-white/10 pointer-events-none"></div>
             
             <div class="max-w-7xl mx-auto w-full relative z-10">
                 <a href="{{ route('admin.activities.index') }}"
-                class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-semibold mb-4 active:opacity-60 transition-all">
+                class="inline-flex items-center gap-1.5 text-white/60 hover:text-white text-sm font-semibold mb-4 active:opacity-60 transition-all text-decoration-none border border-transparent">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
                     </svg>
@@ -83,28 +83,26 @@
 
                     {{-- LEFT COLUMN: MAIN CONTENT --}}
                     <div class="lg:col-span-2 space-y-6">
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 lg:p-10 space-y-8">
+                        <div class="bg-white hd-card p-6 lg:p-10 space-y-8 border-none">
                             
                             {{-- Judul --}}
-                            <div class="space-y-2">
-                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Judul Kegiatan <span class="text-red-400">*</span></label>
-                                <input type="text" name="title" x-model="form.title" id="title_input" placeholder="Contoh: Gathering Anggota 2025"
-                                    class="w-full px-5 py-4 bg-[#EFF6FF] border-2 border-transparent rounded-2xl text-[#1E3A8A] text-lg font-bold placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all duration-200 @error('title') border-red-400 bg-red-50 @enderror" required>
+                            <div class="space-y-3">
+                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Judul Kegiatan <span class="text-red-400">*</span></label>
+                                <x-atoms.input type="text" name="title" x-model="form.title" placeholder="Contoh: Gathering Anggota 2025" :handdrawn="true" required />
                                 @error('title') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                             </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                                 {{-- Emoji --}}
                                 <div class="space-y-3">
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Visual Emoji</label>
-                                    <div class="flex gap-3">
-                                        <input type="text" name="emoji" x-model="form.emoji" maxlength="10" id="emoji_input"
-                                            placeholder="📍"
-                                            class="w-20 h-20 bg-[#EFF6FF] border-2 border-transparent rounded-[1.5rem] text-[#1E3A8A] text-3xl text-center focus:outline-none focus:border-[#2563EB] transition-all duration-200">
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Visual Emoji</label>
+                                    <div class="flex gap-4">
+                                        <x-atoms.input type="text" name="emoji" x-model="form.emoji" maxlength="10" 
+                                            placeholder="📍" :handdrawn="true" class="!w-20 !h-20 !text-3xl text-center" />
                                         <div class="flex-1 grid grid-cols-5 gap-2">
                                             @foreach(['🎉','☕','🏆','📚','🎨','🎤','🏋️','🌿','💼','🎯'] as $em)
                                             <button type="button" @click="form.emoji = '{{ $em }}'"
-                                                class="text-xl aspect-square bg-gray-50 rounded-xl hover:bg-blue-100 active:scale-90 transition-all flex items-center justify-center">{{ $em }}</button>
+                                                class="text-xl aspect-square bg-gray-50 hd-wobbly-md border-hd-ink/10 hover:bg-blue-100 active:scale-90 transition-all flex items-center justify-center">{{ $em }}</button>
                                             @endforeach
                                         </div>
                                     </div>
@@ -112,23 +110,22 @@
 
                                 {{-- Lokasi --}}
                                 <div class="space-y-3">
-                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Lokasi</label>
-                                    <div class="relative h-20">
-                                        <svg class="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Lokasi</label>
+                                    <div class="relative">
+                                        <x-atoms.input type="text" name="location" x-model="form.location" placeholder="Aula Utama Gedung A" :handdrawn="true" class="!pl-12" />
+                                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         </svg>
-                                        <input type="text" name="location" x-model="form.location" id="location_input" placeholder="Contoh: Aula Utama Gedung A"
-                                            class="w-full h-full pl-14 pr-5 bg-[#EFF6FF] border-2 border-transparent rounded-[1.5rem] text-[#1E3A8A] text-sm font-medium placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all duration-200">
                                     </div>
                                 </div>
                             </div>
 
                             {{-- Deskripsi --}}
-                            <div class="space-y-2 mt-8">
-                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest">Detail Deskripsi</label>
-                                <textarea name="description" x-model="form.description" id="description_input" rows="10" placeholder="Jelaskan detail kegiatan di sini agar peserta lebih tertarik…"
-                                    class="w-full px-6 py-6 bg-[#EFF6FF] border-2 border-transparent rounded-[2rem] text-[#1E3A8A] text-base font-medium leading-relaxed placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all duration-200 resize-none"></textarea>
+                            <div class="space-y-3 mt-8">
+                                <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest px-1">Detail Deskripsi</label>
+                                <textarea name="description" x-model="form.description" rows="8" placeholder="Jelaskan detail kegiatan..."
+                                    class="w-full px-6 py-6 bg-white hd-wobbly-md border-2 border-hd-ink text-[#1E3A8A] text-base font-medium leading-relaxed placeholder:text-gray-400 placeholder:font-normal focus:outline-none focus:border-[#2563EB] transition-all duration-200 resize-none"></textarea>
                             </div>
                         </div>
                     </div>
@@ -137,12 +134,12 @@
                     <div class="space-y-6 lg:sticky lg:top-8">
                         
                         {{-- Thumbnail Card --}}
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 overflow-hidden">
+                        <div class="bg-white hd-card p-6 overflow-hidden border-none text-decoration-none">
                             <label class="block text-[#1E3A8A] text-[11px] font-bold uppercase tracking-widest mb-4">Thumbnail / Poster</label>
                             <div class="relative group">
                                 <input type="file" name="image" id="image_input" class="hidden" accept="image/*"
                                     @change="let file = $event.target.files[0]; if(file){ let reader = new FileReader(); reader.onload = (e) => { image_preview = e.target.result }; reader.readAsDataURL(file); }">
-                                <label for="image_input" class="flex flex-col items-center justify-center w-full h-48 lg:h-56 bg-[#EFF6FF] border-2 border-dashed border-blue-200 rounded-[1.5rem] cursor-pointer hover:bg-blue-50 transition-all overflow-hidden relative">
+                                <label for="image_input" class="flex flex-col items-center justify-center w-full h-48 lg:h-56 bg-blue-50 hd-wobbly-md cursor-pointer hover:bg-blue-100 transition-all overflow-hidden relative border border-hd-ink/10">
                                     <template x-if="!image_preview">
                                         <div class="flex flex-col items-center text-center px-4">
                                             <svg class="w-10 h-10 text-[#2563EB] mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -165,7 +162,7 @@
                         </div>
 
                         {{-- Schedule & Status Card --}}
-                        <div class="bg-white border border-gray-100 rounded-[2rem] shadow-sm p-6 space-y-6">
+                        <div class="bg-white hd-card p-6 space-y-6 border-none">
                             {{-- Tanggal & Waktu --}}
                             <div class="space-y-4">
                                 <div class="space-y-2">
@@ -203,13 +200,12 @@
 
                             {{-- Submit --}}
                             <div class="pt-4 space-y-3">
-                                <button type="submit" @click="localStorage.removeItem('activity_draft')"
-                                    class="w-full bg-[#2563EB] text-white font-extrabold py-4 rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-600 active:scale-[0.97] transition-all duration-200 text-sm uppercase tracking-wide">
+                                <x-atoms.button type="submit" variant="primary" size="lg" :handdrawn="true" class="w-full" @click="localStorage.removeItem('activity_draft')">
                                     Simpan Kegiatan
-                                </button>
-                                <button type="button" @click="clearDraft" class="w-full bg-gray-50 text-gray-400 font-bold py-3 rounded-xl hover:bg-red-50 hover:text-red-500 transition-all text-[10px] uppercase tracking-widest">
+                                </x-atoms.button>
+                                <x-atoms.button type="button" @click="clearDraft" variant="secondary" size="md" :handdrawn="true" class="w-full">
                                     Clear Draft
-                                </button>
+                                </x-atoms.button>
                             </div>
                         </div>
 

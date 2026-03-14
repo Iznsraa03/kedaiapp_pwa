@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="min-h-screen">
-        <div class="bg-[#2563EB] px-5 pt-8 pb-4 relative overflow-hidden rounded-b-[2rem] lg:rounded-[2rem] lg:mt-6">
+        <div class="px-5 pt-8 pb-4 relative overflow-hidden bg-[#1E3A8A] hd-wobbly-lg mt-2 mx-2">
             <a href="{{ route('home') }}" class="relative z-10 inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm font-semibold mb-5 active:opacity-60 transition-all">
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
@@ -14,7 +14,7 @@
         <div class="px-5 py-6 space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 @forelse($news as $item)
-                    <a href="#" class="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm lg:hover:shadow-md lg:hover:scale-[1.01] active:scale-[0.98] transition-all duration-150 flex flex-col">
+                    <a href="#" class="bg-white hd-card overflow-hidden active:scale-[0.98] transition-all duration-150 flex flex-col">
                         @if($item->image_url)
                             <img src="{{ $item->image_url }}" alt="{{ $item->title }}" class="w-full h-40 object-cover">
                         @endif

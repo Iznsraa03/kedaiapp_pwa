@@ -13,7 +13,7 @@ export default defineConfig({
         VitePWA({
             registerType: 'autoUpdate',
             devOptions: {
-                enabled: true,           // aktifkan PWA di dev mode
+                enabled: false,           // nonaktifkan PWA di dev mode untuk menghindari 404 sw.js
                 type: 'module',
             },
             includeAssets: ['favicon.ico', 'icons/*.png'],
