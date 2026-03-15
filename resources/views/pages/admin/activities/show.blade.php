@@ -59,24 +59,71 @@
     {{-- ===== BODY ===== --}}
     <div class="px-5 py-5 space-y-5">
 
-        {{-- ===== QR SCANNER ORGANISM ===== --}}
-        <div class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm">
-            <div class="flex items-center gap-2 mb-4">
-                <div class="w-8 h-8 bg-[#EFF6FF] rounded-xl flex items-center justify-center">
-                    <svg class="w-4 h-4 text-[#2563EB]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
-                    </svg>
-                </div>
-                <div>
-                    <p class="text-[#1E3A8A] font-bold text-sm">Scanner Presensi</p>
-                    <p class="text-gray-400 text-xs">Scan QR Code anggota untuk mencatat kehadiran</p>
-                </div>
+        {{-- ===== SCANNER SECTION ===== --}}
+        <div class="space-y-4" x-data="scannerMode">
+            
+            {{-- Tab Switcher --}}
+            <div class="flex bg-gray-100 p-1 rounded-2xl">
+                <button @click="mode = 'camera'" :class="mode === 'camera' ? 'bg-white shadow-sm text-primary' : 'text-gray-500'"
+                    class="flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all">📸 Kamera</button>
+                <button @click="mode = 'physical'; $nextTick(() => $refs.physicalInput.focus())" :class="mode === 'physical' ? 'bg-white shadow-sm text-primary' : 'text-gray-500'"
+                    class="flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-xl transition-all">🔌 Scanner Fisik</button>
             </div>
 
-            <x-organisms.qr-scanner
-                :activity-id="$activity->id"
-                :scan-url="route('admin.activities.scan', $activity)"
-            />
+            {{-- Camera Scanner --}}
+            <div x-show="mode === 'camera'" class="bg-white border border-gray-100 rounded-3xl p-5 shadow-sm animate-fade-in-up">
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 bg-bg-soft rounded-xl flex items-center justify-center">
+                        <svg class="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-navy font-bold text-sm">Scanner Kamera</p>
+                        <p class="text-gray-400 text-xs">Scan menggunakan kamera HP/Laptop</p>
+                    </div>
+                </div>
+                <x-organisms.qr-scanner
+                    :activity-id="$activity->id"
+                    :scan-url="route('admin.activities.scan', $activity)"
+                />
+            </div>
+
+            {{-- Physical Scanner / Manual Input --}}
+            <div x-show="mode === 'physical'" class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm animate-fade-in-up">
+                <div class="flex flex-col items-center text-center gap-4">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-primary">
+                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                        </svg>
+                    </div>
+                    <div class="space-y-1">
+                        <p class="text-navy font-black text-base uppercase tracking-wider">Mode Scanner Fisik</p>
+                        <p class="text-gray-400 text-xs px-4">Hubungkan scanner USB/Bluetooth anda dan langsung tembak kode QR.</p>
+                    </div>
+                    
+                    <div class="w-full relative mt-2">
+                        <input type="text" 
+                            x-ref="physicalInput"
+                            x-model="manualNra"
+                            @keydown.enter="processManualScan()"
+                            placeholder="Menunggu scan..."
+                            class="w-full px-5 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl text-center text-navy font-bold focus:outline-none focus:border-primary focus:bg-white transition-all tracking-widest uppercase">
+                        
+                        <div x-show="isScanning" class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center rounded-2xl">
+                            <svg class="animate-spin h-5 w-5 text-primary" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <button @click="processManualScan()" :disabled="!manualNra || isScanning"
+                        class="w-full bg-primary text-white font-black py-4 rounded-2xl shadow-lg shadow-blue-100 active:scale-95 transition-all disabled:opacity-50">
+                        Input Manual
+                    </button>
+                </div>
+            </div>
         </div>
 
         {{-- ===== DAFTAR PESERTA HADIR ===== --}}
@@ -139,6 +186,59 @@
     </style>
     <script>
         document.addEventListener('alpine:init', () => {
+            Alpine.data('scannerMode', () => ({
+                mode: 'camera',
+                manualNra: '',
+                isScanning: false,
+
+                init() {
+                    // Refocus otomatis jika klik di mana saja saat mode physical
+                    document.addEventListener('click', () => {
+                        if (this.mode === 'physical' && this.$refs.physicalInput) {
+                            this.$refs.physicalInput.focus();
+                        }
+                    });
+                },
+
+                async processManualScan() {
+                    let nraValue = this.manualNra.trim();
+                    if (!nraValue || this.isScanning) return;
+                    
+                    this.isScanning = true;
+                    try {
+                        const response = await window.axios.post('{{ route('admin.activities.scan', $activity) }}', {
+                            nra: nraValue
+                        });
+
+                        if (response.data.success) {
+                            window.dispatchEvent(new CustomEvent('attendee-added', { 
+                                detail: { attendee: response.data.attendee } 
+                            }));
+                            
+                            window.dispatchEvent(new CustomEvent('toast', { 
+                                detail: { type: 'success', message: response.data.message } 
+                            }));
+                            
+                            this.manualNra = '';
+                        } else {
+                            window.dispatchEvent(new CustomEvent('toast', { 
+                                detail: { type: 'error', message: response.data.message } 
+                            }));
+                            this.manualNra = '';
+                        }
+                    } catch (error) {
+                        const errorMsg = error.response?.data?.message || 'Gagal memproses scan.';
+                        window.dispatchEvent(new CustomEvent('toast', { 
+                            detail: { type: 'error', message: errorMsg } 
+                        }));
+                        this.manualNra = '';
+                    } finally {
+                        this.isScanning = false;
+                        this.$nextTick(() => this.$refs.physicalInput.focus());
+                    }
+                }
+            }));
+
             Alpine.data('attendeeList', () => ({
                 addAttendee(att) {
                     if (!att) return;

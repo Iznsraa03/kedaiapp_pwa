@@ -4,7 +4,7 @@
   <img src="public/logo/KD.png" width="300" alt="KeDai Computerworks Text Logo">
 </p>
 
-# 🧊 KeDai Computerworks PWA
+# KeDai Computerworks PWA
 [![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 [![PWA Ready](https://img.shields.io/badge/PWA-Ready-000000?style=for-the-badge&logo=pwa)](https://web.dev/pwa/)
