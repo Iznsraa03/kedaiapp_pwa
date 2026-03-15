@@ -66,8 +66,7 @@
                     <img src="/logo/KDCW.png" alt="KeDai" class="w-9 h-9 object-contain">
                 </div>
                 <div>
-                    <p class="text-white font-extrabold text-base leading-tight">KeDai Computerworks</p>
-                    <p class="text-blue-200 text-xs">Management System</p>
+                    <img src="/logo/KD.png" alt="Kedai" class="h-9 w-auto">
                 </div>
             </div>
 
@@ -111,12 +110,15 @@
             <div class="flex-1 glass rounded-3xl flex flex-col items-center justify-center p-10">
                 <div id="scan-result" class="flex flex-col items-center gap-6 w-full slide-in-up">
 
-                    <!-- {{-- Avatar --}}
-                    <div class="w-40 h-40 rounded-full bg-white/20 border-4 border-white/40 flex items-center justify-center shadow-2xl">
-                        <span id="scan-initials" class="text-white font-black text-7xl drop-shadow">
+                    {{-- Avatar --}}
+                    <div id="scan-avatar-container" class="w-40 h-40 rounded-full bg-white/20 border-4 border-white/40 flex items-center justify-center shadow-2xl overflow-hidden">
+                        <img id="scan-avatar" src="{{ $lastScan && $lastScan->user->avatar_url ? $lastScan->user->avatar_url : '' }}" 
+                             class="w-full h-full object-cover {{ $lastScan && $lastScan->user->avatar_url ? '' : 'hidden' }}">
+                        
+                        <span id="scan-initials" class="text-white font-black text-7xl drop-shadow {{ $lastScan && $lastScan->user->avatar_url ? 'hidden' : '' }}">
                             {{ $lastScan ? strtoupper(substr($lastScan->user->name, 0, 2)) : '?' }}
                         </span>
-                    </div> -->
+                    </div>
 
                     {{-- Name & NRA --}}
                     <div class="text-center">
@@ -172,8 +174,12 @@
                 <div id="attendee-list" class="flex flex-col gap-2 overflow-y-auto flex-1 pr-1 scrollbar-hide">
                     @forelse($activity->attendances()->with('user')->latest('scanned_at')->take(10)->get() as $att)
                     <div class="attendee-card glass-dark flex items-center gap-3 rounded-2xl px-4 py-3">
-                        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                            <span class="text-white text-sm font-bold">{{ strtoupper(substr($att->user->name, 0, 2)) }}</span>
+                        <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+                            @if($att->user->avatar_url)
+                                <img src="{{ $att->user->avatar_url }}" class="w-full h-full object-cover">
+                            @else
+                                <span class="text-white text-sm font-bold">{{ strtoupper(substr($att->user->name, 0, 2)) }}</span>
+                            @endif
                         </div>
                         <div class="flex-1 min-w-0">
                             <p class="text-white font-semibold text-sm truncate">{{ $att->user->name }}</p>
@@ -254,7 +260,23 @@
             void result.offsetWidth;
             result.classList.add('slide-in-up');
 
-            document.getElementById('scan-initials').textContent = att.name.substring(0, 2).toUpperCase();
+            const avatarImg = document.getElementById('scan-avatar');
+            const initials  = document.getElementById('scan-initials');
+
+            if (att.avatar) {
+                if (avatarImg) {
+                    avatarImg.src = att.avatar;
+                    avatarImg.classList.remove('hidden');
+                }
+                if (initials) initials.classList.add('hidden');
+            } else {
+                if (avatarImg) avatarImg.classList.add('hidden');
+                if (initials) {
+                    initials.textContent = att.name.substring(0, 2).toUpperCase();
+                    initials.classList.remove('hidden');
+                }
+            }
+
             document.getElementById('scan-name').textContent     = att.name;
             document.getElementById('scan-nra').textContent      = att.nra;
             document.getElementById('scan-time').textContent     = 'Scan pada ' + att.scanned_at;
@@ -276,19 +298,23 @@
 
             const statusClass = att.status === 'present' ? 'bg-green-400/20 text-green-300' : 'bg-yellow-400/20 text-yellow-300';
             const statusLabel = att.status === 'present' ? 'Hadir' : 'Terlambat';
-            const initials    = att.name.substring(0, 2).toUpperCase();
+            
+            let avatarContent = `<span class="text-white text-sm font-bold">${att.name.substring(0, 2).toUpperCase()}</span>`;
+            if (att.avatar) {
+                avatarContent = `<img src="${att.avatar}" class="w-full h-full object-cover">`;
+            }
 
             const card = document.createElement('div');
             card.className = 'attendee-card glass-dark slide-in-up flex items-center gap-3 rounded-2xl px-4 py-3';
             card.innerHTML = `
-                <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <span class="text-white text-sm font-bold">${initials}</span>
+                <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0 overflow-hidden">
+                    ${avatarContent}
                 </div>
                 <div class="flex-1 min-w-0">
                     <p class="text-white font-semibold text-sm truncate">${att.name}</p>
                     <p class="text-blue-200 font-mono text-xs">${att.nra}</p>
                 </div>
-                <div class="text-right flex-shrink-0">
+                <div class="text-right shrink-0">
                     <span class="text-[10px] font-semibold px-2 py-1 rounded-lg ${statusClass}">${statusLabel}</span>
                     <p class="text-blue-300/50 text-[10px] mt-0.5 font-mono">${att.scanned_at}</p>
                 </div>

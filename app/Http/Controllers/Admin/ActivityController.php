@@ -103,6 +103,7 @@ class ActivityController extends Controller
                 'name'       => $latest->user->name,
                 'nra'        => $latest->user->nra,
                 'status'     => $latest->status,
+                'avatar'     => $latest->user->avatar_url,
                 'scanned_at' => $latest->scanned_at->format('H:i:s'),
             ];
 
