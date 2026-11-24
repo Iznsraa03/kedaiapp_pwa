@@ -5,7 +5,7 @@
 </p>
 
 # KeDai Computerworks PWA
-[![Laravel 12](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
+[![Laravel 13](https://img.shields.io/badge/Laravel-13.x-FF2D20?style=for-the-badge&logo=laravel)](https://laravel.com)
 [![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com)
 [![PWA Ready](https://img.shields.io/badge/PWA-Ready-000000?style=for-the-badge&logo=pwa)](https://web.dev/pwa/)
 
@@ -25,7 +25,7 @@
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Laravel 12 (PHP 8.2+)
+- **Backend:** Laravel 13 (PHP 8.3+)
 - **Frontend:** Tailwind CSS 4, Alpine.js, Blade Components
 - **Database:** MySQL / SQLite
 - **Security:** HMAC-SHA256 Tokenization

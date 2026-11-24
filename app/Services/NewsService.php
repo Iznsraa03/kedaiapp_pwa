@@ -34,7 +34,7 @@ class NewsService
             $title = $this->extractTitle($xpath);
             $description = $this->extractDescription($xpath);
             $image = $this->extractImage($xpath, $url);
-            $content = $this->extractContent($xpath);
+            $content = $this->extractContent($xpath, $dom);
 
             if ($title && $content) {
                 return [
@@ -109,7 +109,7 @@ class NewsService
         return null;
     }
 
-    protected function extractContent(DOMXPath $xpath): ?string
+    protected function extractContent(DOMXPath $xpath, DOMDocument $dom): ?string
     {
         // A more robust content extraction would involve identifying common article containers.
         // This is a basic attempt to get text content from common elements.

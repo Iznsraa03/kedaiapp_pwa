@@ -157,10 +157,16 @@
             <div class="w-80 xl:w-96 flex flex-col gap-4 min-h-0">
 
                 {{-- Stats --}}
+                <div class="grid grid-cols-2 gap-3">
                     <div class="glass rounded-2xl px-4 py-3 text-center">
                         <p id="attendee-count" class="text-white font-extrabold text-3xl">{{ $activity->attendances()->count() }}</p>
                         <p class="text-blue-200 text-xs mt-0.5">Hadir</p>
                     </div>
+                    <div class="glass rounded-2xl px-4 py-3 text-center">
+                        <p id="late-count" class="text-yellow-300 font-extrabold text-3xl">{{ $activity->attendances()->where('status', 'late')->count() }}</p>
+                        <p class="text-blue-200 text-xs mt-0.5">Terlambat</p>
+                    </div>
+                </div>
 
                 {{-- List header --}}
                 <div class="flex items-center justify-between px-1">
@@ -235,9 +241,12 @@
                 .then(r => r.json())
                 .then(data => {
                     // Update counters
-                    document.getElementById('attendee-count').textContent = data.total;
-                    document.getElementById('late-count').textContent     = data.late;
-                    document.getElementById('total-count').textContent    = data.total + ' orang';
+                    const elAttendee = document.getElementById('attendee-count');
+                    const elLate = document.getElementById('late-count');
+                    const elTotal = document.getElementById('total-count');
+                    if (elAttendee) elAttendee.textContent = data.total;
+                    if (elLate) elLate.textContent = data.late;
+                    if (elTotal) elTotal.textContent = data.total + ' orang';
 
                     // Tampilkan jika ada scan baru
                     if (data.attendee && data.timestamp && data.timestamp > lastTimestamp) {

@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "skills": {
+    "obsidian-markdown": {
+      "source": "obsidianmd/obsidian-skills",
+      "commit": "b110b2f8e9eb1f287892f937050dfd40af862cbb",
+      "sourceType": "github",
+      "skillPath": "plugins/obsidian/skills/obsidian-markdown/SKILL.md",
+      "computedHash": "c5c46fd4ab6321d2ccc3f680ee5372efd1d070749e6ddb8e571e0b0c2ac1ae16"
+    }
+  }
+}
